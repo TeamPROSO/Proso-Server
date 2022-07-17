@@ -18,10 +18,10 @@ public class User {
     @Column(name = "USER_IDX")
     private Long userIdx;
 
-    @Column(nullable = false, unique = true,name = "USERNAME")
+    @Column(nullable = false,name = "USERNAME")
     private String  username;
 
-    @Column(nullable = false,length =50,name= "NICKNAME")
+    @Column(nullable = false,unique = true,length =50,name= "NICKNAME")
     private String nickname;
 
     @Column(nullable = false, length = 100,name = "PASSWORD")
