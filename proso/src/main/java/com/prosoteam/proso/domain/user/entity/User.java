@@ -1,32 +1,44 @@
 package com.prosoteam.proso.domain.user.entity;
 
+import com.prosoteam.proso.global.entity.BaseTimeEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
+@Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@Entity
+@RequiredArgsConstructor
 @Table(name = "USER_TB")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USER_IDX")
-    private Long userIdx;
+    private Long id;
 
-    @Column(nullable = false,name = "USERNAME")
-    private String  username;
-
-    @Column(nullable = false,unique = true,length =50,name= "NICKNAME")
+    private String picture;
     private String nickname;
 
-    @Column(nullable = false, length = 100,name = "PASSWORD")
-    private String password;
+    @Column(nullable = false)
+    private String email;
+    private String name;
 
-    @Column(name = "USER_Img")
-    private String userImg ;
+
+    @Column(nullable = false)
+    private String role = "ROLE_USER";
+
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
+    public User update(String name) {
+        this.name = name;
+
+        return this;
+    }
+
+    // .. getter, setter 생략
 }
