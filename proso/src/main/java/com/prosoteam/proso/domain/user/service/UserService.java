@@ -1,4 +1,5 @@
 package com.prosoteam.proso.domain.user.service;
 
-public class UserService {
+public interface UserService {
+
 }
