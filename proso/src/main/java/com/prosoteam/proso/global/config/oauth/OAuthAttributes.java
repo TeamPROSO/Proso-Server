@@ -11,14 +11,19 @@ import java.util.Map;
 public class OAuthAttributes {
     private Map<String, Object> attributes;
     private String nameAttributeKey;
-    private String name;
-    private String email;
+    private String userName;
+    private String profileImgUrl;
+    private Long socialId;
+    private String socialType;
 
-    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email) {
+
+    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String userName, String profileImgUrl,Long socialId,String socialType) {
         this.attributes = attributes;
         this.nameAttributeKey = nameAttributeKey;
-        this.name = name;
-        this.email = email;
+        this.userName = userName;
+        this.profileImgUrl = profileImgUrl;
+        this.socialId=socialId;
+        this.socialType=socialType;
     }
 
     public OAuthAttributes() {
@@ -42,7 +47,10 @@ public class OAuthAttributes {
         return new OAuthAttributes(attributes,
                 userNameAttributeName,
                 (String) profile.get("nickname"),
-                (String) kakao_account.get("email"));
+                (String) profile.get("profile_img_url"),
+                (Long) attributes.get("id"),
+                "KAKAO"
+                );
     }
 
 
@@ -51,12 +59,16 @@ public class OAuthAttributes {
         return new OAuthAttributes(attributes,
                 userNameAttributeName,
                 (String) attributes.get("name"),
-                (String) attributes.get("email"));
+                (String) attributes.get("email"),
+                121231l,
+                "GOOGLE"
+
+        );
     }
 
     // .. getter/setter 생략
 
     public User toEntity() {
-        return new User(name, email);
+        return new User(userName, profileImgUrl,socialId,socialType);
     }
 }

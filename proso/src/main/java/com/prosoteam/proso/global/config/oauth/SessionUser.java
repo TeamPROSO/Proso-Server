@@ -2,36 +2,27 @@ package com.prosoteam.proso.global.config.oauth;
 
 
 import com.prosoteam.proso.domain.user.entity.User;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
+@Getter
+@Setter
 public class SessionUser implements Serializable {
     private String name;
-    private String email;
+    private String profileImgUrl;
+    private Long socialId;
+    private String socialType;
 
     public SessionUser(User user) {
-        this.name = user.getName();
-        this.email = user.getEmail();
+        this.name = user.getUserName();
+        this.profileImgUrl = user.getProfileImgUrl();
+        this.socialId=user.getSocialId();
+        this.socialType=user.getSocialType();
     }
 
     public SessionUser() {
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
 
 }

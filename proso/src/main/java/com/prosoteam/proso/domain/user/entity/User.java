@@ -16,26 +16,28 @@ import javax.persistence.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userIdx_PK")
     private Long id;
 
-    private String picture;
-    private String nickname;
 
     @Column(nullable = false)
-    private String email;
-    private String name;
+    private String userName;
+    private String profileImgUrl;
+    private Long socialId;
+    private String socialType;
+    //private String email;
 
+    private String status;
 
-    @Column(nullable = false)
-    private String role = "ROLE_USER";
-
-    public User(String name, String email) {
-        this.name = name;
-        this.email = email;
+    public User(String userName, String profileImgUrl,Long socialId,String socialType) {
+        this.userName =userName;
+        this.profileImgUrl = profileImgUrl;
+        this.socialId=socialId;
+        this.socialType=socialType;
     }
 
-    public User update(String name) {
-        this.name = name;
+    public User update(String userName) {
+        this.userName = userName;
 
         return this;
     }
