@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -22,11 +23,15 @@ public class User extends BaseTimeEntity{
 
     @Column(nullable = false)
     private String userName;
+    @Column(nullable = false)
     private String profileImgUrl;
+    @Column(nullable = false)
     private Long socialId;
+    @Column(nullable = false)
     private String socialType;
     //private String email;
 
+    @Column(columnDefinition = "VARCHAR(20) default 'ACTIVE'")
     private String status;
 
     public User(String userName, String profileImgUrl, Long socialId, String socialType) {
@@ -34,6 +39,7 @@ public class User extends BaseTimeEntity{
         this.profileImgUrl = profileImgUrl;
         this.socialId = socialId;
         this.socialType = socialType;
+        this.status="ACTIVE";
     }
 
     public User update(String userName) {
