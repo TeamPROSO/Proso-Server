@@ -18,8 +18,8 @@ public class SessionUser implements Serializable {
     public SessionUser(User user) {
         this.name = user.getUserName();
         this.profileImgUrl = user.getProfileImgUrl();
-        this.socialId=user.getSocialId();
-        this.socialType=user.getSocialType();
+        this.socialId = user.getSocialId();
+        this.socialType = user.getSocialType();
     }
 
     public SessionUser() {

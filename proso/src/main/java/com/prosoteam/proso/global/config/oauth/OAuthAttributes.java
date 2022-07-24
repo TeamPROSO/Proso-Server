@@ -17,13 +17,13 @@ public class OAuthAttributes {
     private String socialType;
 
 
-    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String userName, String profileImgUrl,Long socialId,String socialType) {
+    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String userName, String profileImgUrl, Long socialId, String socialType) {
         this.attributes = attributes;
         this.nameAttributeKey = nameAttributeKey;
         this.userName = userName;
         this.profileImgUrl = profileImgUrl;
-        this.socialId=socialId;
-        this.socialType=socialType;
+        this.socialId = socialId;
+        this.socialType = socialType;
     }
 
     public OAuthAttributes() {
@@ -50,7 +50,7 @@ public class OAuthAttributes {
                 (String) profile.get("profile_img_url"),
                 (Long) attributes.get("id"),
                 "KAKAO"
-                );
+        );
     }
 
 
@@ -69,6 +69,6 @@ public class OAuthAttributes {
     // .. getter/setter 생략
 
     public User toEntity() {
-        return new User(userName, profileImgUrl,socialId,socialType);
+        return new User(userName, profileImgUrl, socialId, socialType);
     }
 }

@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @RequiredArgsConstructor
 @Table(name = "USER_TB")
-public class User {
+public class User extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userIdx_PK")
@@ -29,11 +29,11 @@ public class User {
 
     private String status;
 
-    public User(String userName, String profileImgUrl,Long socialId,String socialType) {
-        this.userName =userName;
+    public User(String userName, String profileImgUrl, Long socialId, String socialType) {
+        this.userName = userName;
         this.profileImgUrl = profileImgUrl;
-        this.socialId=socialId;
-        this.socialType=socialType;
+        this.socialId = socialId;
+        this.socialType = socialType;
     }
 
     public User update(String userName) {
