@@ -1,5 +1,5 @@
 # Proso-Server
-🔗[notion/Proso-Server](https://www.notion.so/P-Server-d4532ba9ce2a489c9858fc65f851c2d8)
+🔗[notion/Proso-Server](https://carnelian-cloudberry-496.notion.site/P-Server-d4532ba9ce2a489c9858fc65f851c2d8)
 
 ---   
 ### 🏠 Contributors
@@ -108,7 +108,7 @@ ex) Feat: #12 - 테스트용입니다.
 ---
 ### 📝 API 명세서
 
-[API 명세서 바로가기](https://www.notion.so/API-374ed7769383468b8f63b18f0f903609)
+[API 명세서 바로가기](https://carnelian-cloudberry-496.notion.site/API-374ed7769383468b8f63b18f0f903609)
   
 ---
 ### 📒 Feedback
