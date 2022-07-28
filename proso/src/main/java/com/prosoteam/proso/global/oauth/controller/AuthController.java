@@ -1,5 +1,6 @@
 package com.prosoteam.proso.global.oauth.controller;
 
+import com.prosoteam.proso.domain.user.entity.User;
 import com.prosoteam.proso.global.common.CommonResponse;
 import com.prosoteam.proso.global.oauth.dto.AuthRequest;
 import com.prosoteam.proso.global.oauth.dto.AuthResponse;

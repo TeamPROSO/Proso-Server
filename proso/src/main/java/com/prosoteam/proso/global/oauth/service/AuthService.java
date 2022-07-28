@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,10 +33,12 @@ public class AuthService {
             userRepository.save(userInfo);
         }
         //서버용 jwt 토큰 발급
+
         String accessToken= jwtAuthTokenProvider.generateToken(socialId);
         String refreshToken= jwtAuthTokenProvider.generateRefreshToken(socialId);
 
         return AuthResponse.builder()
+                .socialId(socialId)
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
