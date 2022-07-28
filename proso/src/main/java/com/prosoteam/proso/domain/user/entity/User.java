@@ -1,10 +1,7 @@
 package com.prosoteam.proso.domain.user.entity;
 
 import com.prosoteam.proso.global.entity.BaseTimeEntity;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -12,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Table(name = "USER_TB")
 public class User extends BaseTimeEntity{
     @Id
@@ -20,20 +17,23 @@ public class User extends BaseTimeEntity{
     @Column(name = "userIdx_PK")
     private Long id;
 
+    @Column(nullable = false)
+    private Long socialId;
 
     @Column(nullable = false)
     private String userName;
+
     @Column(nullable = false)
     private String profileImgUrl;
-    @Column(nullable = false)
-    private Long socialId;
+
     @Column(nullable = false)
     private String socialType;
-    //private String email;
 
     @Column(columnDefinition = "VARCHAR(20) default 'ACTIVE'")
     private String status;
 
+
+    @Builder
     public User(String userName, String profileImgUrl, Long socialId, String socialType) {
         this.userName = userName;
         this.profileImgUrl = profileImgUrl;
@@ -42,6 +42,15 @@ public class User extends BaseTimeEntity{
         this.status="ACTIVE";
     }
 
+    public static User KakaoUser(Long socialId,String userName,String profileImgUrl){
+        return User.builder()
+                .socialId(socialId)
+                .userName(userName)
+                .profileImgUrl(profileImgUrl)
+                .socialType("KAKAO")
+                .build();
+
+    }
     public User update(String userName) {
         this.userName = userName;
 
