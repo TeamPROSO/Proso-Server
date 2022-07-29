@@ -8,7 +8,6 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @Table(name = "USER_TB")
 public class User extends BaseTimeEntity{
@@ -17,7 +16,7 @@ public class User extends BaseTimeEntity{
     @Column(name = "userIdx_PK")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private Long socialId;
 
     @Column(nullable = false)
@@ -32,6 +31,8 @@ public class User extends BaseTimeEntity{
     @Column(columnDefinition = "VARCHAR(20) default 'ACTIVE'")
     private String status;
 
+
+    private String refreshToken;
 
     @Builder
     public User(String userName, String profileImgUrl, Long socialId, String socialType) {
@@ -57,5 +58,9 @@ public class User extends BaseTimeEntity{
         return this;
     }
 
+    public User updateRefreshToken(String refreshToken){
+        this.refreshToken=refreshToken;
+        return this;
+    }
     // .. getter, setter 생략
 }

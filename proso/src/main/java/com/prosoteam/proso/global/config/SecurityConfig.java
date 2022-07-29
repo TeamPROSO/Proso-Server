@@ -1,7 +1,7 @@
 package com.prosoteam.proso.global.config;
 
+import com.prosoteam.proso.global.oauth.service.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -16,6 +16,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @EnableWebSecurity  // 해당 애노테이션을 붙인 필터(현재 클래스)를 스프링 필터체인에 등록.
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final JwtTokenProvider jwtTokenProvider;
 
     // WebSecurity에 필터를 거는 게 훨씬 빠름. HttpSecrity에 필터를 걸면, 이미 스프링 시큐리티 내부에 들어온 상태기 때문에..
     @Override
@@ -23,12 +24,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().mvcMatchers( "/image/**");    // /image/** 있는 모든 파일들은 시큐리티 적용을 무시한다.
         web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());    // 정적인 리소스들에 대해서 시큐리티 적용 무시.
     }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
+                .antMatchers(("/user/**")).permitAll()
                 .antMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated().and() // 해당 요청을 인증된 사용자만 사용 가능
                 .headers()

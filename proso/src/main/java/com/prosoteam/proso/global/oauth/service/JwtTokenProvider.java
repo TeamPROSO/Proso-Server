@@ -2,17 +2,30 @@ package com.prosoteam.proso.global.oauth.service;
 
 import com.prosoteam.proso.global.common.ErrorCode;
 import com.prosoteam.proso.global.common.exception.BaseException;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.prosoteam.proso.global.common.exception.TokenValidFailedException;
+import io.jsonwebtoken.*;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.CachingUserDetailsService;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.DatatypeConverter;
 import java.util.Base64;
 import java.util.Date;
 
+@RequiredArgsConstructor
 @Component
+@Slf4j
 public class JwtTokenProvider {
-    private String secretKey = "e7yF1Exi8bUKTAfkT39Dq2yVKaoCsC6pN/ZaApWjQJI=";
+    @Value("${secret.access}")
+    private String secretKey;
+
 
     @PostConstruct
     protected void init() {
@@ -49,14 +62,51 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public void validateRefreshToken(String refreshToken) throws BaseException {
-        Date exp = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(refreshToken).getBody().getExpiration();
 
-        Date now = new Date();
 
-        if (!exp.after(now)) {
-            throw new BaseException(ErrorCode.INVALID_JWT);
+    public Claims getClaimsToken(String token) {
+        return Jwts.parser()
+                .setSigningKey(DatatypeConverter.parseBase64Binary(secretKey))
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    //토큰 유효성 검사
+    public boolean isValidToken(String token) {
+        log.info("isValidToken is : " + token);
+        try {
+            Claims accessClaims = getClaimsToken(token);
+            log.info("Access expireTime: " + accessClaims.getExpiration());
+            log.info("Access socialId: " + accessClaims.get("socialId"));
+            return true;
+        } catch (ExpiredJwtException exception) {
+            log.error("Token Expired UserID : " + exception.getClaims().get("socialId"));
+            return false;
+        } catch (JwtException exception) {
+            log.error("Token Tampered");
+            return false;
+        } catch (NullPointerException exception) {
+            log.error("Token is null");
+            return false;
         }
+    }
+
+
+    //Request의 Header에서 token값 가져오기 "ACCESS_TOKEN" : "TOKEN값'
+    public String resolveAccessToken(HttpServletRequest request){
+        return request.getHeader("ACCESS_TOKEN");
+    }
+
+    public String resolveRefreshToken(HttpServletRequest request){
+        return request.getHeader("REFRESH_TOKEN");
+    }
+
+    //토큰에서 회원 정보 추출
+    public Long getUserSocialId(String token) throws TokenValidFailedException {
+        if(isValidToken(token)) {
+            return Long.parseLong(Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject());
+        }
+        return null;
     }
 
 
