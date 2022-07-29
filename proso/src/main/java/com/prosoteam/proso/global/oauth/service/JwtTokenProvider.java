@@ -78,7 +78,7 @@ public class JwtTokenProvider {
         try {
             Claims accessClaims = getClaimsToken(token);
             log.info("Access expireTime: " + accessClaims.getExpiration());
-            log.info("Access socialId: " + accessClaims.get("socialId"));
+            log.info("Access socialId: " + accessClaims.getSubject());
             return true;
         } catch (ExpiredJwtException exception) {
             //기간 만료됨
