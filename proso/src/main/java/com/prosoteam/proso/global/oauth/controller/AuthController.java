@@ -38,10 +38,13 @@ public class AuthController {
     /**
      * 앱 토큰 갱신
      * @return CommonResponse<AuthResponse>
+     *    리프레쉬 토큰 만료 -> access 토큰 , 리프레쉬 토큰 둘 다 갱신
+     *    리프레쉬 토큰 유효 -> refresh token 이용해 access 토큰만 갱신
      */
 
     @PostMapping("/refresh")
     public CommonResponse<AuthResponse> refreshToken (HttpServletRequest request) {
+
         return CommonResponse.success(authService.updateToken(request));
     }
 

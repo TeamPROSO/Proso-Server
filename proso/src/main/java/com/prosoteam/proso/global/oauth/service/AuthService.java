@@ -56,36 +56,40 @@ public class AuthService {
      *
      * access_token이 만료 되었을때 refresh token을 이용해 재발급
      */
+    //TODO 예외 처리
     public AuthResponse updateToken(HttpServletRequest request) {
+        Long socialId=1L;
         String accessToken = jwtAuthTokenProvider.resolveAccessToken(request);
         String refreshToken = jwtAuthTokenProvider.resolveRefreshToken(request);
-        System.out.println("accessToken = " + accessToken);
-        System.out.println("refreshToken = " + refreshToken);
-        //accessToken이 만료됐고 refreshToken이 맞으면 accessToken을 새로 발급(refreshToken의 내용을 통해서)
+        log.info("accessToken = " + accessToken);
+        log.info("refreshToken = " + refreshToken);
 
-        if (jwtAuthTokenProvider.isValidToken(refreshToken)) {     //들어온 Refresh 토큰이 유효한지
-            System.out.println("Refresh 토큰은 유효함");
+        //accessToken이 만료됐고 refresh Token이 validate하면 accessToken을 새로 발급(refreshToken의 내용을 통해서)
+        if (jwtAuthTokenProvider.isValidToken(refreshToken)) {
+            log.info("Refresh 토큰은 유효함");
 
             Claims claimsToken = jwtAuthTokenProvider.getClaimsToken(refreshToken);
-            Long socialId = Long.parseLong( (String) claimsToken.get("socialId"));
+            socialId = Long.parseLong((String) claimsToken.getSubject());
+            log.info("갱신을 요청한 유저 : " + socialId);
 
             Optional<User> user = userRepository.findBySocialId(socialId);
             String savedRefreshToken = user.get().getRefreshToken();
-            System.out.println("tokenFromDB = " + savedRefreshToken);
+            log.info("저장돼있던 Refresh Token = " + savedRefreshToken);
 
             if (refreshToken.equals(savedRefreshToken)) {   //DB의 refresh토큰과 지금들어온 토큰이 같은지 확인
-                System.out.println("access 토큰 재발급 완료");
+                log.info("access 토큰 재발급 완료");
                 accessToken = jwtAuthTokenProvider.generateToken(socialId);
             } else {
-                //DB의 Refresh토큰과 들어온 Refresh토큰이 다르면 중간에 변조된 것임
+                //DB의 Refresh토큰과 들어온 Refresh토큰이 다르면 중간에 변조된 것
                 System.out.println("Refresh Token Tampered");
-                //예외발생
+                //예외 처리
             }
         } else {
-            //입력으로 들어온 Refresh 토큰이 유효하지 않음
+            //입력으로 들어온 Refresh 토큰이 유효하지 않음 . refresh 토큰 기간 만료된 경우는 제외 . 예외처리
         }
 
         return AuthResponse.builder()
+                .socialId(socialId)
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
