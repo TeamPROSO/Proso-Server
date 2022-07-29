@@ -52,11 +52,17 @@ public class User extends BaseTimeEntity{
                 .build();
 
     }
-    public User update(String userName) {
+    public void updateUserName(String userName) {
         this.userName = userName;
-
-        return this;
     }
+    public void updateProfileImgUrl(String profileImgUrl) {
+        this.profileImgUrl = profileImgUrl;
+    }
+    public void updateBoth(String userName,String profileImgUrl) {
+        this.userName = userName;
+        this.profileImgUrl=profileImgUrl;
+    }
+
 
     public User updateRefreshToken(String refreshToken){
         this.refreshToken=refreshToken;

@@ -45,6 +45,7 @@ public class AuthService {
 
 
         log.info("업데이트된 리프레쉬 토큰"+ user.get().getRefreshToken());
+        userRepository.flush();
         //로그인 처리 완료
         return AuthResponse.builder()
                 .socialId(socialId)
