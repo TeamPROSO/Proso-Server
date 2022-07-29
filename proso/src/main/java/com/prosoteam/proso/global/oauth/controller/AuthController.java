@@ -2,6 +2,7 @@ package com.prosoteam.proso.global.oauth.controller;
 
 import com.prosoteam.proso.domain.user.entity.User;
 import com.prosoteam.proso.global.common.CommonResponse;
+import com.prosoteam.proso.global.common.ErrorCode;
 import com.prosoteam.proso.global.oauth.JwtHeaderUtil;
 import com.prosoteam.proso.global.oauth.dto.AuthRequest;
 import com.prosoteam.proso.global.oauth.dto.AuthResponse;
@@ -44,8 +45,11 @@ public class AuthController {
 
     @PostMapping("/refresh")
     public CommonResponse<AuthResponse> refreshToken (HttpServletRequest request) {
-
-        return CommonResponse.success(authService.updateToken(request));
+        AuthResponse authResponse =authService.updateToken(request);
+        if(authResponse==null){ //오류 발생
+            return CommonResponse.error(ErrorCode.INVALID_REFRESH_TOKEN);
+        }
+        return CommonResponse.success(authResponse);
     }
 
 

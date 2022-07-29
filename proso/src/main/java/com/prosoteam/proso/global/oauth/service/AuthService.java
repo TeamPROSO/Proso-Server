@@ -2,6 +2,8 @@ package com.prosoteam.proso.global.oauth.service;
 
 import com.prosoteam.proso.domain.user.entity.User;
 import com.prosoteam.proso.domain.user.repository.UserRepository;
+import com.prosoteam.proso.global.common.ErrorCode;
+import com.prosoteam.proso.global.common.exception.BaseException;
 import com.prosoteam.proso.global.oauth.dto.AuthRequest;
 import com.prosoteam.proso.global.oauth.dto.AuthResponse;
 import com.prosoteam.proso.global.oauth.dto.KakaoResponse;
@@ -81,10 +83,13 @@ public class AuthService {
                 accessToken = jwtAuthTokenProvider.generateToken(socialId);
             } else {
                 //DB의 Refresh토큰과 들어온 Refresh토큰이 다르면 중간에 변조된 것
-                System.out.println("Refresh Token Tampered");
+                log.error("Refresh Token Tampered");
                 //예외 처리
+                return null;
             }
         } else {
+            log.error("Refresh token not validate");
+            return null;
             //입력으로 들어온 Refresh 토큰이 유효하지 않음 . refresh 토큰 기간 만료된 경우는 제외 . 예외처리
         }
 
