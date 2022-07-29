@@ -3,6 +3,7 @@ package com.prosoteam.proso.global.oauth.service;
 import com.prosoteam.proso.domain.user.entity.User;
 import com.prosoteam.proso.global.common.CommonResponse;
 import com.prosoteam.proso.global.common.ErrorCode;
+import com.prosoteam.proso.global.common.exception.BaseException;
 import com.prosoteam.proso.global.common.exception.TokenValidFailedException;
 import com.prosoteam.proso.global.oauth.dto.KakaoResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,8 @@ public class KakaoClient {
                 .uri("https://kapi.kakao.com/v2/user/me")
                 .headers(h -> h.setBearerAuth(accessToken))
                 .retrieve()
-                .onStatus(HttpStatus::is4xxClientError, response -> Mono.error(new TokenValidFailedException()))
-                .onStatus(HttpStatus::is5xxServerError, response -> Mono.error(new TokenValidFailedException()))
+                .onStatus(HttpStatus::is4xxClientError, response -> Mono.error(new TokenValidFailedException(ErrorCode.INVALID_ACCESS_TOKEN)))
+                .onStatus(HttpStatus::is5xxServerError, response -> Mono.error(new TokenValidFailedException(ErrorCode.INVALID_ACCESS_TOKEN)))
                 .bodyToMono(KakaoResponse.class)
                 .block();
 

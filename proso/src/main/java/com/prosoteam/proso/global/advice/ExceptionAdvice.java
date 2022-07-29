@@ -2,6 +2,7 @@ package com.prosoteam.proso.global.advice;
 
 import com.prosoteam.proso.global.common.CommonResponse;
 import com.prosoteam.proso.global.common.ErrorCode;
+import com.prosoteam.proso.global.common.exception.BaseException;
 import com.prosoteam.proso.global.common.exception.TokenValidFailedException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +40,10 @@ public class ExceptionAdvice {
         return CommonResponse.error(ErrorCode.UNSUPPORTED_MEDIA_TYPE);
     }
 
+    /**
+     *
+     * 토큰 관련 에러에서 발생
+     */
     @ExceptionHandler(TokenValidFailedException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResponse<Object> TokenValidFailedException(TokenValidFailedException e){
@@ -47,4 +52,9 @@ public class ExceptionAdvice {
     }
 
 
+    @ExceptionHandler(BaseException.class)
+    protected CommonResponse<Object> BaseException(BaseException e){
+        log.error(e.getMessage(),e);
+        return CommonResponse.error(e.getErrorCode());
+    }
 }
