@@ -1,10 +1,13 @@
 package com.prosoteam.proso.domain.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.prosoteam.proso.domain.theme.model.Theme;
 import com.prosoteam.proso.global.entity.BaseTimeEntity;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -62,5 +65,11 @@ public class User extends BaseTimeEntity{
         this.refreshToken=refreshToken;
         return this;
     }
-    // .. getter, setter 생략
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "user",
+            fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Theme> themes;
+
+
 }
