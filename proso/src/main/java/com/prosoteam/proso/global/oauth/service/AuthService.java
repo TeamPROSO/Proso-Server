@@ -86,7 +86,7 @@ public class AuthService {
                 //DB의 Refresh토큰과 들어온 Refresh토큰이 다르면 중간에 변조된 것
                 log.error("Refresh Token Tampered");
                 //예외 처리
-                return null;
+                throw new BaseException(ErrorCode.TAMPERED_REFRESH_TOKEN);
             }
         } else {
             log.error("Refresh token not validate");

@@ -83,13 +83,13 @@ public class JwtTokenProvider {
         } catch (ExpiredJwtException exception) {
             //기간 만료됨
             log.error("Token Expired UserID : " + exception.getClaims().getSubject());
-            return false;
+            throw new BaseException(ErrorCode.EXPIRED_JWT);
         } catch (JwtException exception) {
             log.error("Token Tampered");
-            return false;
+            throw new BaseException(ErrorCode.INVALID_ACCESS_TOKEN);
         } catch (NullPointerException exception) {
             log.error("Token is null");
-            return false;
+            throw new BaseException(ErrorCode.EMPTY_JWT);
         }
     }
 

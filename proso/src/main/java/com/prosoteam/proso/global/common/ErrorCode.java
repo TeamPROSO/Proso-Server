@@ -25,6 +25,7 @@ public enum ErrorCode {
     UNSUPPORTED_MEDIA_TYPE(false,"2005","지원하지 않는 미디어 타입입니다."),
     INVALID_ACCESS_TOKEN(false,"2006","잘못된 ACCESS TOKEN 입니다."),
     INVALID_REFRESH_TOKEN(false,"2007","잘못된 REFRESH TOKEN 입니다."),
+    TAMPERED_REFRESH_TOKEN(false,"2008","DB에 저장된 값과 들어온 REFRESH TOKEN 값이 다릅니다."),
     // users
     USERS_EMPTY_USER_ID(false, "2010", "유저 아이디 값을 확인해주세요."),
 

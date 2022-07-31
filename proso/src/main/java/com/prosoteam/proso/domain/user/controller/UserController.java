@@ -44,8 +44,6 @@ public class UserController {
     @PostMapping("/extra")
     public CommonResponse<UserResponse> updateExtraInfo(@RequestHeader("Authorization") String jwtToken,@RequestBody ExtraUserRequest extraUserRequest){
         Long socialId = jwtTokenProvider.getUserSocialId(jwtToken);
-        if(socialId==null)
-            return CommonResponse.error(ErrorCode.EXPIRED_JWT);
         return CommonResponse.success(userService.addExtraUserInfo(socialId,extraUserRequest));
     }
 }
