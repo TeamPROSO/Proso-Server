@@ -28,7 +28,7 @@ public class MainService {
      * 현재위치 기반 주변 식당 리스트 저장 함수.
      */
     public MainRandomResponse getNearFoodInfo(UserCurrentRequest userCurrentRequest) {
-        KakaoMapResponse kakaoMapResponse=kakaoMapClient.getNearFoodInfo("edcd891623ddb3df5598da9c63c5fd75", userCurrentRequest.getX(), userCurrentRequest.getY());
+        KakaoMapResponse kakaoMapResponse=kakaoMapClient.getNearFoodInfo(userCurrentRequest.getX(), userCurrentRequest.getY());
         if (kakaoMapResponse.getDocuments().isEmpty()) { //예외처리
             //
         }
