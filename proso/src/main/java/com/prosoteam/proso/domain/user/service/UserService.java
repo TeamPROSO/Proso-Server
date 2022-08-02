@@ -1,5 +1,6 @@
 package com.prosoteam.proso.domain.user.service;
 
+import com.prosoteam.proso.domain.user.dto.ExtraUserRequest;
 import com.prosoteam.proso.domain.user.dto.UserResponse;
 import com.prosoteam.proso.domain.user.entity.User;
 import com.prosoteam.proso.domain.user.repository.UserRepository;
@@ -32,4 +33,33 @@ public class UserService {
                 .profileImgUrl(user.get().getProfileImgUrl())
                 .build();
     }
+
+
+    public UserResponse addExtraUserInfo(Long socialId, ExtraUserRequest extraUserRequest){
+        Optional<User> user= userRepository.findBySocialId(socialId);
+        if (user.isEmpty()) {
+            throw new BaseException(ErrorCode.USERS_EMPTY_USER_ID);
+        }
+        String userName= extraUserRequest.getUserName();
+        String profileImgUrl= extraUserRequest.getProfileImgUrl();
+        log.info("바꾸려는 닉네임 : "+userName);
+        log.info("바꾸려는 프사 : "+profileImgUrl);
+
+        if (userName==null){
+            user.get().updateProfileImgUrl(profileImgUrl);
+        }else if(profileImgUrl==null){
+            user.get().updateUserName(userName);
+        }else{
+            user.get().updateBoth(userName,profileImgUrl);
+        }
+        log.info("업데이트 성공: "+ user.get().getSocialId());
+        userRepository.flush();
+
+        return UserResponse.builder()
+                .socialId(socialId)
+                .userName(user.get().getUserName())
+                .profileImgUrl(user.get().getProfileImgUrl())
+                .build();
+    }
+
 }

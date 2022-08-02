@@ -46,9 +46,6 @@ public class AuthController {
     @PostMapping("/refresh")
     public CommonResponse<AuthResponse> refreshToken (HttpServletRequest request) {
         AuthResponse authResponse =authService.updateToken(request);
-        if(authResponse==null){ //오류 발생
-            return CommonResponse.error(ErrorCode.INVALID_REFRESH_TOKEN);
-        }
         return CommonResponse.success(authResponse);
     }
 
