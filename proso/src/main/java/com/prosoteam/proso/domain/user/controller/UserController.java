@@ -27,7 +27,7 @@ public class UserController {
      * @param jwtToken
      * @return
      */
-    @PostMapping("")
+    @GetMapping("")
     public CommonResponse<UserResponse> GetCurrentUserInfo(@RequestHeader("Authorization") String jwtToken) {
         // jwt 복호화. user정보 얻기 //TODO 예외처리 적용하기
         Long socialId = jwtTokenProvider.getUserSocialId(jwtToken);
