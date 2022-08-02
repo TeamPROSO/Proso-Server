@@ -29,8 +29,7 @@ public class KakaoMapClient {
                 .retrieve()
                 .bodyToMono(KakaoMapResponse.class)
                 .block();
-
-        log.info("kakaoMapResponse: "+kakaoMapResponse.getDocuments().get(0).getPlaceName());
+        
         return kakaoMapResponse;
     }
 

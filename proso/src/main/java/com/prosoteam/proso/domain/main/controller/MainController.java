@@ -19,8 +19,8 @@ public class MainController {
     private final MainService mainService;
 
     @GetMapping("/food")
-    public void GetRandomFood(@RequestHeader("Authorization") String jwtToken,@RequestBody UserCurrentRequest userCurrentRequest){
+    public CommonResponse<MainRandomResponse> GetRandomFood(@RequestHeader("Authorization") String jwtToken,@RequestBody UserCurrentRequest userCurrentRequest){
         Long socialId = jwtTokenProvider.getUserSocialId(jwtToken);
-
+        return CommonResponse.success(mainService.getNearFoodInfo(userCurrentRequest));
     }
 }
