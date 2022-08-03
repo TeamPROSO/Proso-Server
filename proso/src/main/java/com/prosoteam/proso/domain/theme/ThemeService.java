@@ -5,6 +5,7 @@ import com.prosoteam.proso.domain.theme.model.Theme;
 import com.prosoteam.proso.domain.theme.model.ThemeCreationRequest;
 import com.prosoteam.proso.domain.user.entity.User;
 import com.prosoteam.proso.domain.user.repository.UserRepository;
+import com.prosoteam.proso.global.common.exception.BaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,8 @@ public class ThemeService {
         return themeRepository.save(themeToCreate);
     }
 
+
+
     //테마 조회
     public Theme readTheme(Long id){
         Optional<Theme> theme = themeRepository.findById(id);
@@ -50,10 +53,8 @@ public class ThemeService {
         return themeRepository.findAll();
     }
 
-    //테마 삭제
-    public void deleteTheme(Long id) {
-        themeRepository.deleteById(id);
-    }
+
+
 
     //테마 수정
     public Theme updateTheme (Long id, ThemeCreationRequest request){
@@ -70,5 +71,11 @@ public class ThemeService {
         theme.setThemeImgUrl(request.getThemeImgUrl());
         return themeRepository.save(theme);
     }
+
+    //테마 삭제
+    public void deleteTheme(Long id) {
+        themeRepository.deleteById(id);
+    }
+
 }
 
