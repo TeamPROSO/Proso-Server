@@ -1,39 +1,47 @@
 package com.prosoteam.proso.global.oauth.service;
 
+import com.prosoteam.proso.domain.user.service.UserService;
 import com.prosoteam.proso.global.common.ErrorCode;
 import com.prosoteam.proso.global.common.exception.BaseException;
 import com.prosoteam.proso.global.common.exception.TokenValidFailedException;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.CachingUserDetailsService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
-import java.util.Base64;
-import java.util.Date;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
 @Slf4j
 public class JwtTokenProvider {
+    private final UserService userService;
+
     @Value("${secret.access}")
     private String secretKey;
-
 
     @PostConstruct
     protected void init() {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
+
+
     public String generateToken(Long socialId){
-        long tokenPeriod = 1000L * 60L * 10L;
+        long tokenPeriod = 1000L * 60L * 30L;
 
         Claims claims = Jwts.claims().setSubject(String.valueOf(socialId));
 
@@ -93,6 +101,9 @@ public class JwtTokenProvider {
         }
     }
 
+    public String getAccessTokenHeader(HttpServletRequest request){
+        return request.getHeader("Authorization");
+    }
 
     //Request의 Header에서 token값 가져오기 "ACCESS_TOKEN" : "TOKEN값'
     public String resolveAccessToken(HttpServletRequest request){
@@ -111,5 +122,16 @@ public class JwtTokenProvider {
         return null;
     }
 
+    public Authentication getAuthentication(String token) {
+        Long socialId = getUserSocialId(token);
+        String role = userService.getUserRole(socialId);
+
+        Collection<? extends GrantedAuthority> authorities =
+                Arrays.stream(new String[]{role})
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList());
+
+        return new UsernamePasswordAuthenticationToken(socialId, "", authorities);
+    }
 
 }

@@ -3,6 +3,7 @@ package com.prosoteam.proso.domain.user.entity;
 import com.prosoteam.proso.global.entity.BaseTimeEntity;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Table(name = "USER_TB")
-public class User extends BaseTimeEntity{
+public class User extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userIdx_PK")
@@ -31,16 +32,18 @@ public class User extends BaseTimeEntity{
     @Column(columnDefinition = "VARCHAR(20) default 'ACTIVE'")
     private String status;
 
-
     private String refreshToken;
 
+    private String role;
+
     @Builder
-    public User(String userName, String profileImgUrl, Long socialId, String socialType) {
+    public User(String userName, String profileImgUrl, Long socialId, String socialType, String status,String role) {
         this.userName = userName;
         this.profileImgUrl = profileImgUrl;
         this.socialId = socialId;
         this.socialType = socialType;
-        this.status="ACTIVE";
+        this.status=status;
+        this.role=role;
     }
 
     public static User KakaoUser(Long socialId,String userName,String profileImgUrl){
@@ -67,6 +70,10 @@ public class User extends BaseTimeEntity{
     public User updateRefreshToken(String refreshToken){
         this.refreshToken=refreshToken;
         return this;
+    }
+
+    public void updateRole(String role){
+        this.role=role;
     }
     // .. getter, setter 생략
 }

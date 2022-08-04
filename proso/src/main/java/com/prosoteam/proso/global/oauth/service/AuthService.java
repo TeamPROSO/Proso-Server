@@ -32,7 +32,7 @@ public class AuthService {
         Optional<User> findUser= userRepository.findBySocialId(socialId);
 
         if(findUser.isEmpty()){ //회윈가입이 안된 경우
-            log.info("저장되었습니다.");
+            log.info("저장되었습니다."+userInfo.getRole());
             userRepository.save(userInfo);
         }
         //서버용 jwt 토큰 발급

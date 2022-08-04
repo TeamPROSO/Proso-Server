@@ -34,6 +34,13 @@ public class UserService {
                 .build();
     }
 
+    public String getUserRole(Long socialId) {
+        Optional<User> user = userRepository.findBySocialId(socialId);
+        if (user.isEmpty()) {
+            throw new BaseException(ErrorCode.USERS_EMPTY_USER_ID);
+        }
+        return user.get().getRole();
+    }
 
     public UserResponse addExtraUserInfo(Long socialId, ExtraUserRequest extraUserRequest){
         Optional<User> user= userRepository.findBySocialId(socialId);
