@@ -66,6 +66,7 @@ public class User extends BaseTimeEntity{
         return this;
     }
 
+
     @JsonBackReference
     @OneToMany(mappedBy = "user",
             fetch = FetchType.LAZY, cascade = CascadeType.ALL)
