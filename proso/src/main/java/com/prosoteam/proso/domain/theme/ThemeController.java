@@ -4,20 +4,25 @@ import com.prosoteam.proso.domain.theme.model.Theme;
 import com.prosoteam.proso.domain.theme.model.ThemeCreationRequest;
 import com.prosoteam.proso.global.common.exception.BaseException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.prosoteam.proso.global.common.CommonResponse;
+import com.prosoteam.proso.global.common.ErrorCode;
 
 @RestController
 @RequestMapping(value = "/api/themes")
 @RequiredArgsConstructor
-public class Controller {
+public class ThemeController {
     private final ThemeService themeService;
 
     //테마 생성
     @PostMapping("/theme")
     public CommonResponse<Theme> createTheme (@RequestBody ThemeCreationRequest request) {
-        return CommonResponse.success(themeService.createTheme(request));
+        Theme theme = themeService.createTheme(request);
+        if(theme == null){
+           //에러발생
+           return CommonResponse.error(ErrorCode.POST_POSTS_INVALID_CONTENTS);
+        }
+        return CommonResponse.success(theme);
     }
 
     //테마 조회(아이디로 테마조회 or 테마 전체 조회 둘 다 가능)
@@ -32,6 +37,9 @@ public class Controller {
     //테마 수정
     @PatchMapping("/theme/{themeId}")
     public CommonResponse<Theme> updateTheme(@RequestBody ThemeCreationRequest request, @PathVariable Long themeId){
+        if(themeId==null){ //오류 발생
+            return CommonResponse.error(ErrorCode.POSTS_EMPTY_POST_ID);
+        }
         return CommonResponse.success(themeService.updateTheme(themeId, request));
     }
 
