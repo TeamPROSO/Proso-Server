@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -24,19 +25,33 @@ import java.util.Random;
 public class MainService {
 
     private final KakaoMapClient kakaoMapClient;
+
     /**
      * 현재위치 기반 주변 식당 리스트 저장 함수.
      */
-    public MainRandomResponse getNearFoodInfo(UserCurrentRequest userCurrentRequest) {
-        KakaoMapResponse kakaoMapResponse=kakaoMapClient.getNearFoodInfo(userCurrentRequest.getX(), userCurrentRequest.getY());
-        if (kakaoMapResponse.getDocuments().isEmpty()) { //예외처리
-            //
+    public MainRandomResponse getNearFoodInfo(UserCurrentRequest userCurrentRequest){
+        ArrayList<MainRandomResponse> list=new ArrayList<>();
+        int page=0;
+        while(true){
+            page++;
+            log.info("페이지"+page);
+            KakaoMapResponse kakaoMapResponse=kakaoMapClient.getNearFoodInfo(userCurrentRequest.getX(), userCurrentRequest.getY(),page);
+            if (kakaoMapResponse.getDocuments().isEmpty()){//예외처리->아무것도 안담겨온경우
+
+            }
+            if(kakaoMapResponse.getMeta().getIsEnd()){ //종료조건
+                list.add(getRandomOne(kakaoMapResponse));
+                log.info("리스트 size "+list.size());
+                int resultNum=getFinalResult(list.size());
+                return list.get(resultNum);
+            }
+            list.add(getRandomOne(kakaoMapResponse));
         }
-        return getRandomOne(kakaoMapResponse);
+
     }
 
     /**
-     * 저장된 리스트 기반으로 랜덤한 값 1개 뽑는 함수.
+     * kakaoMapResponse 기반으로 랜덤한 값 1개 뽑는 함수.
      */
     public MainRandomResponse getRandomOne(KakaoMapResponse kakaoMapResponse){
         Random generator = new Random();
@@ -58,4 +73,14 @@ public class MainService {
                 .build();
         
     }
+    /**
+     * 저장된 List 기반으로 최종 값 1개 뽑는 함수
+     */
+    public int getFinalResult(int size){
+        Random generator = new Random();
+        int selectNum= generator.nextInt(size);
+
+        return selectNum;
+    }
+
 }
