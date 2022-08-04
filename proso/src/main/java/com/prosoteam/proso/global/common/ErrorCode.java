@@ -29,7 +29,9 @@ public enum ErrorCode {
     // users
     USERS_EMPTY_USER_ID(false, "2010", "유저 아이디 값을 확인해주세요."),
 
-    // [POST] /users
+    //main
+    MAIN_RESPONSE_EMPTY(false, "2014","카카오맵 API에서 응답 받지 못했습니다."),
+
     POST_USERS_EMPTY_EMAIL(false, "2015", "이메일을 입력해주세요."),
     POST_USERS_INVALID_EMAIL(false, "2016", "이메일 형식을 확인해주세요."),
     POST_USERS_EXISTS_EMAIL(false,"2017","중복된 이메일입니다."),

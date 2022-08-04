@@ -37,7 +37,7 @@ public class MainService {
             log.info("페이지"+page);
             KakaoMapResponse kakaoMapResponse=kakaoMapClient.getNearFoodInfo(userCurrentRequest.getX(), userCurrentRequest.getY(),page);
             if (kakaoMapResponse.getDocuments().isEmpty()){//예외처리->아무것도 안담겨온경우
-
+                throw new BaseException(ErrorCode.MAIN_RESPONSE_EMPTY);
             }
             if(kakaoMapResponse.getMeta().getIsEnd()){ //종료조건
                 list.add(getRandomOne(kakaoMapResponse));

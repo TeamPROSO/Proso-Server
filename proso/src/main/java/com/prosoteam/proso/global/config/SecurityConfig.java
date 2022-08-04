@@ -29,6 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
+
                 .antMatchers(("/user/**")).permitAll()
                 .antMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated().and() // 해당 요청을 인증된 사용자만 사용 가능
