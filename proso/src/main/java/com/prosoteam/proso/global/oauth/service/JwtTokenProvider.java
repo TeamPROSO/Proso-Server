@@ -116,10 +116,7 @@ public class JwtTokenProvider {
 
     //토큰에서 회원 정보 추출
     public Long getUserSocialId(String token) throws TokenValidFailedException {
-        if(isValidToken(token)) {
-            return Long.parseLong(Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject());
-        }
-        return null;
+        return Long.parseLong(Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject());
     }
 
     public Authentication getAuthentication(String token) {
