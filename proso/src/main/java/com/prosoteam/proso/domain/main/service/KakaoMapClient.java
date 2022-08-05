@@ -48,4 +48,21 @@ public class KakaoMapClient {
                 .block();
         return kakaoMapResponse;
     }
+
+    /**
+     * food code FD6
+     * cafe code CE7
+     * activity code CT1 , AT4
+     * "https://dapi.kakao.com/v2/local/search/category.json?category_group_code={카테고리 코드 입력}&x={현재위치 경도}&y={현재 위치 위도}&radius={현재위치로부터 반경설정}
+
+     */
+    public KakaoMapResponse getNearInfo(String x,String y,String code,int page) {
+        KakaoMapResponse kakaoMapResponse = webClient.get()
+                .uri("https://dapi.kakao.com/v2/local/search/category.json?category_group_code="+code+"&x="+x+"&y="+y+"&radius=10000&page="+page)
+                .header("Authorization","KakaoAK "+key)
+                .retrieve()
+                .bodyToMono(KakaoMapResponse.class)
+                .block();
+        return kakaoMapResponse;
+    }
 }

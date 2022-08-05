@@ -72,6 +72,57 @@ public class MainService {
         }
 
     }
+    /**
+     * 현재위치 기반 주변 리스트 저장 함수.
+     * food code FD6
+     * cafe code CE7
+     * activity code CT1 , AT4
+     */
+    public MainRandomResponse getResultList(String x,String y, String code){
+        ArrayList<MainRandomResponse> list = new ArrayList<>();
+        int page = 0;
+
+        while (true) {
+            page++;
+            log.info("페이지" + page);
+            KakaoMapResponse kakaoMapResponse = kakaoMapClient.getNearInfo(x, y, code, page);
+            if (kakaoMapResponse.getDocuments().isEmpty()) {//예외처리->아무것도 안담겨온경우
+                throw new BaseException(ErrorCode.MAIN_RESPONSE_EMPTY);
+            }
+            if (kakaoMapResponse.getMeta().getIsEnd()) { //종료조건
+                list.add(getRandomOne(kakaoMapResponse));
+                log.info("리스트 size " + list.size());
+                int resultNum = getFinalResult(list.size());
+                return list.get(resultNum);
+            }
+            list.add(getRandomOne(kakaoMapResponse));
+        }
+    }
+
+    public MainRandomResponse getNearInfo(UserCurrentRequest userCurrentRequest) {
+        ArrayList<MainRandomResponse> list = new ArrayList<>();
+
+        for (int i = 0; i < 4; i++) {
+            switch (i) {
+                case 0:
+                    list.add(getResultList(userCurrentRequest.getX(), userCurrentRequest.getY(), "FD6"));
+                    break;
+                case 1:
+                    list.add(getResultList(userCurrentRequest.getX(), userCurrentRequest.getY(), "CE7"));
+                    break;
+                case 2:
+                    list.add(getResultList(userCurrentRequest.getX(), userCurrentRequest.getY(), "CT1"));
+                    break;
+                case 3:
+                    list.add(getResultList(userCurrentRequest.getX(), userCurrentRequest.getY(), "AT4"));
+                    break;
+            }
+
+        }
+        log.info("리스트 size " + list.size());
+        int resultNum = getFinalResult(list.size());
+        return list.get(resultNum);
+    }
 
     /**
      * kakaoMapResponse 기반으로 랜덤한 값 1개 뽑는 함수.

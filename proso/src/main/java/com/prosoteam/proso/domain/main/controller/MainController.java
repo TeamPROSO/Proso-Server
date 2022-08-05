@@ -27,4 +27,10 @@ public class MainController {
     public CommonResponse<MainRandomResponse> GetRandomCafe(@RequestHeader("Authorization") String jwtToken,@RequestBody UserCurrentRequest userCurrentRequest){
         return CommonResponse.success(mainService.getNearCafeInfo(userCurrentRequest));
     }
+
+    @GetMapping("/all")
+    public CommonResponse<MainRandomResponse> GetRandomAll(@RequestHeader("Authorization") String jwtToken,@RequestBody UserCurrentRequest userCurrentRequest){
+        return CommonResponse.success(mainService.getNearInfo(userCurrentRequest));
+    }
+
 }
