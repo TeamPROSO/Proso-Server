@@ -2,10 +2,6 @@ package com.prosoteam.proso.domain.content.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.prosoteam.proso.domain.theme.model.Theme;
-import com.prosoteam.proso.domain.user.entity.User;
-
-import javax.persistence.*;
-
 import javax.persistence.*;
 
 import com.prosoteam.proso.global.entity.BaseTimeEntity;

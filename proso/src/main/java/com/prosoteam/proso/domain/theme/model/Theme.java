@@ -2,13 +2,18 @@ package com.prosoteam.proso.domain.theme.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.prosoteam.proso.domain.content.model.Content;
 import com.prosoteam.proso.domain.user.entity.User;
+
+import javax.persistence.*;
 
 import javax.persistence.*;
 
 import com.prosoteam.proso.global.entity.BaseTimeEntity;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -35,4 +40,10 @@ public class Theme extends BaseTimeEntity {
     @JsonManagedReference
     private User user;
 
+    @JsonBackReference
+    @OneToMany(mappedBy = "theme",
+            fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Content> contents;
+
 }
+
