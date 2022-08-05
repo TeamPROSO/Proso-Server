@@ -22,4 +22,9 @@ public class MainController {
     public CommonResponse<MainRandomResponse> GetRandomFood(@RequestHeader("Authorization") String jwtToken,@RequestBody UserCurrentRequest userCurrentRequest){
         return CommonResponse.success(mainService.getNearFoodInfo(userCurrentRequest));
     }
+
+    @GetMapping("/cafe")
+    public CommonResponse<MainRandomResponse> GetRandomCafe(@RequestHeader("Authorization") String jwtToken,@RequestBody UserCurrentRequest userCurrentRequest){
+        return CommonResponse.success(mainService.getNearCafeInfo(userCurrentRequest));
+    }
 }
