@@ -9,6 +9,8 @@ import com.prosoteam.proso.domain.theme.model.Theme;
 import com.prosoteam.proso.domain.user.entity.User;
 import com.prosoteam.proso.domain.user.repository.UserRepository;
 import com.prosoteam.proso.domain.user.service.UserService;
+import com.prosoteam.proso.global.common.ErrorCode;
+import com.prosoteam.proso.global.common.exception.BaseException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,10 +29,10 @@ public class BookmarkService {
         Optional<User> user=userRepository.findBySocialId(userId);
         Optional<Theme> theme= themeRepository.findById(themeIdx);
         if (user.isEmpty()){ //TODO: 에러처리 존재하지 않는 유저
-
+            throw new BaseException(ErrorCode.USERS_EMPTY_USER_ID);
         }
         if(theme.isEmpty()){//TODO: 에러처리 잘못된 THEME_IDX 존재하지 않음
-
+            throw new BaseException(ErrorCode.REQUEST_ERROR);
         }
         User newUser = user.get();
         Theme newTheme = theme.get();
