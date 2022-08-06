@@ -19,17 +19,17 @@ public class MainController {
     private final MainService mainService;
 
     @GetMapping("/food")
-    public CommonResponse<MainRandomResponse> GetRandomFood(@RequestHeader("Authorization") String jwtToken,@RequestBody UserCurrentRequest userCurrentRequest){
+    public CommonResponse<MainRandomResponse> GetRandomFood(@RequestBody UserCurrentRequest userCurrentRequest){
         return CommonResponse.success(mainService.getNearFoodInfo(userCurrentRequest));
     }
 
     @GetMapping("/cafe")
-    public CommonResponse<MainRandomResponse> GetRandomCafe(@RequestHeader("Authorization") String jwtToken,@RequestBody UserCurrentRequest userCurrentRequest){
+    public CommonResponse<MainRandomResponse> GetRandomCafe(@RequestBody UserCurrentRequest userCurrentRequest){
         return CommonResponse.success(mainService.getNearCafeInfo(userCurrentRequest));
     }
 
     @GetMapping("/all")
-    public CommonResponse<MainRandomResponse> GetRandomAll(@RequestHeader("Authorization") String jwtToken,@RequestBody UserCurrentRequest userCurrentRequest){
+    public CommonResponse<MainRandomResponse> GetRandomAll(@RequestBody UserCurrentRequest userCurrentRequest){
         return CommonResponse.success(mainService.getNearInfo(userCurrentRequest));
     }
 
