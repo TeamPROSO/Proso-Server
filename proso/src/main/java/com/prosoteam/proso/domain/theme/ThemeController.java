@@ -9,13 +9,13 @@ import com.prosoteam.proso.global.common.CommonResponse;
 import com.prosoteam.proso.global.common.ErrorCode;
 
 @RestController
-@RequestMapping(value = "/api/themes")
+@RequestMapping(value = "/theme")
 @RequiredArgsConstructor
 public class ThemeController {
     private final ThemeService themeService;
 
     //테마 생성
-    @PostMapping("/theme")
+    @PostMapping("")
     public CommonResponse<Theme> createTheme (@RequestBody ThemeCreationRequest request) {
         Theme theme = themeService.createTheme(request);
         if(theme == null){
@@ -26,7 +26,7 @@ public class ThemeController {
     }
 
     //테마 조회(아이디로 테마조회 or 테마 전체 조회 둘 다 가능)
-    @GetMapping("/theme")
+    @GetMapping("")
     public CommonResponse readThemes(@RequestParam(required = false) Long themeId) {
         if (themeId == null) {
             return CommonResponse.success(themeService.readThemes());
@@ -35,7 +35,7 @@ public class ThemeController {
     }
 
     //테마 수정
-    @PatchMapping("/theme/{themeId}")
+    @PatchMapping("/{themeId}")
     public CommonResponse<Theme> updateTheme(@RequestBody ThemeCreationRequest request, @PathVariable Long themeId){
         if(themeId==null){ //오류 발생
             return CommonResponse.error(ErrorCode.POSTS_EMPTY_POST_ID);
@@ -44,7 +44,7 @@ public class ThemeController {
     }
 
 
-    @DeleteMapping("/theme/{themeId}")
+    @DeleteMapping("/{themeId}")
     public CommonResponse<String> deleteTheme(@PathVariable Long themeId){
         try{
             themeService.deleteTheme(themeId);

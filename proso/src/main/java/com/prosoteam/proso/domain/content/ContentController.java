@@ -11,13 +11,13 @@ import com.prosoteam.proso.global.common.ErrorCode;
 
 
 @RestController
-@RequestMapping(value = "/api/contents")
+@RequestMapping(value = "/content")
 @RequiredArgsConstructor
 public class ContentController {
     private final ContentService contentService;
 
     //콘텐츠 생성
-    @PostMapping("/content")
+    @PostMapping("")
     public CommonResponse<Content> createContent (@RequestBody ContentCreationRequest request) {
         Content content = contentService.createContent(request);
         if(content == null){
@@ -39,7 +39,7 @@ public class ContentController {
     */
 
     //콘텐츠 수정
-    @PatchMapping("/content/{contentId}")
+    @PatchMapping("/{contentId}")
     public CommonResponse<Content> updateContent(@RequestBody ContentCreationRequest request, @PathVariable Long contentId){
         if(contentId==null){ //오류 발생
             return CommonResponse.error(ErrorCode.POSTS_EMPTY_POST_ID);
@@ -49,7 +49,7 @@ public class ContentController {
 
 
     //콘텐츠 삭제
-    @DeleteMapping("/content/{contentId}")
+    @DeleteMapping("/{contentId}")
     public CommonResponse<String> deleteContent(@PathVariable Long contentId){
         try{
             contentService.deleteContent(contentId);
