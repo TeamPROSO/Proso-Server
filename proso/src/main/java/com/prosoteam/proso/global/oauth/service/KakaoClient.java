@@ -39,6 +39,8 @@ public class KakaoClient {
                 .userName(kakaoResponse.getProperties().getNickname())
                 .socialType("KAKAO")
                 .profileImgUrl(kakaoResponse.getProperties().getProfile_image())
+                .status("ACTIVEK")
+                .role("ROLE_USER")
                 .build();
     }
 }

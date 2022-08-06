@@ -13,14 +13,24 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth")
+@RequestMapping("/main")
 public class MainController {
     private final JwtTokenProvider jwtTokenProvider;
     private final MainService mainService;
 
     @GetMapping("/food")
-    public void GetRandomFood(@RequestHeader("Authorization") String jwtToken,@RequestBody UserCurrentRequest userCurrentRequest){
-        Long socialId = jwtTokenProvider.getUserSocialId(jwtToken);
-
+    public CommonResponse<MainRandomResponse> GetRandomFood(@RequestHeader("Authorization") String jwtToken,@RequestBody UserCurrentRequest userCurrentRequest){
+        return CommonResponse.success(mainService.getNearFoodInfo(userCurrentRequest));
     }
+
+    @GetMapping("/cafe")
+    public CommonResponse<MainRandomResponse> GetRandomCafe(@RequestHeader("Authorization") String jwtToken,@RequestBody UserCurrentRequest userCurrentRequest){
+        return CommonResponse.success(mainService.getNearCafeInfo(userCurrentRequest));
+    }
+
+    @GetMapping("/all")
+    public CommonResponse<MainRandomResponse> GetRandomAll(@RequestHeader("Authorization") String jwtToken,@RequestBody UserCurrentRequest userCurrentRequest){
+        return CommonResponse.success(mainService.getNearInfo(userCurrentRequest));
+    }
+
 }

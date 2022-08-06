@@ -1,21 +1,16 @@
 package com.prosoteam.proso.global.oauth.controller;
 
-import com.prosoteam.proso.domain.user.entity.User;
 import com.prosoteam.proso.global.common.CommonResponse;
-import com.prosoteam.proso.global.common.ErrorCode;
-import com.prosoteam.proso.global.oauth.JwtHeaderUtil;
 import com.prosoteam.proso.global.oauth.dto.AuthRequest;
 import com.prosoteam.proso.global.oauth.dto.AuthResponse;
 import com.prosoteam.proso.global.oauth.service.AuthService;
-import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor

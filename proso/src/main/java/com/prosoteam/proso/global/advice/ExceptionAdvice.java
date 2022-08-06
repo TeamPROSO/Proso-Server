@@ -12,6 +12,8 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.reactive.function.client.WebClientException;
 
 @RestControllerAdvice
 @RequiredArgsConstructor
@@ -40,6 +42,15 @@ public class ExceptionAdvice {
         return CommonResponse.error(ErrorCode.UNSUPPORTED_MEDIA_TYPE);
     }
 
+    /**
+     * INTERNAL SERVER ERROR
+     */
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(WebClientException.class)
+    private CommonResponse<Object> handleInternalServerError(WebClientException e){
+        log.warn(e.getMessage(), e);
+        return CommonResponse.error(ErrorCode.SERVER_ERROR);
+    }
     /**
      *
      * 토큰 관련 에러에서 발생
