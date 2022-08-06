@@ -12,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,7 +45,7 @@ public class ContentService {
         return contentRepository.save(contentToCreate);
     }
 
-    /*
+
     //콘텐츠 조회
     public Content readContent(Long id){
         Optional<Content> content = contentRepository.findById(id);
@@ -60,7 +61,7 @@ public class ContentService {
     public List<Content> readContents(){
         return contentRepository.findAll();
     }
-    */
+
 
 
     //콘텐츠 수정

@@ -27,16 +27,16 @@ public class ContentController {
         return CommonResponse.success(content);
     }
 
-    /*
+
     //컨텐츠 조회(아이디로 컨텐츠조회 or 컨텐츠 전체 조회 둘 다 가능)
-    @GetMapping("/content")
+    @GetMapping("")
     public CommonResponse readContents(@RequestParam(required = false) Long contentId) {
         if (contentId == null) {
             return CommonResponse.success(contentService.readContents());
         }
         return CommonResponse.success(contentService.readContent(contentId));
     }
-    */
+
 
     //콘텐츠 수정
     @PatchMapping("/{contentId}")
