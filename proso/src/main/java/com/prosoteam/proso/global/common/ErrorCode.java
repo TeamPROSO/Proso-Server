@@ -33,7 +33,7 @@ public enum ErrorCode {
     MAIN_RESPONSE_EMPTY(false, "2014","카카오맵 API에서 응답 받지 못했습니다."),
 
     THEME_USERS_EMPTY(false,"2015","작성한 테마가 없습니다."),
-    POST_USERS_INVALID_EMAIL(false, "2016", "이메일 형식을 확인해주세요."),
+    BOOKMARK_USERS_EMPTY(false, "2016", "북마크한 테마가 없습니다."),
     POST_USERS_EXISTS_EMAIL(false,"2017","중복된 이메일입니다."),
 
     POST_POSTS_INVALID_CONTENTS(false,"2018","내용의 글자수를 확인해주세요."),

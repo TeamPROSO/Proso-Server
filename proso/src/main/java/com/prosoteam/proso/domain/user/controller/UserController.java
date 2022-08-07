@@ -2,16 +2,14 @@ package com.prosoteam.proso.domain.user.controller;
 
 import com.prosoteam.proso.domain.user.dto.ExtraUserRequest;
 import com.prosoteam.proso.domain.user.dto.UserResponse;
-import com.prosoteam.proso.domain.user.entity.User;
+import com.prosoteam.proso.domain.user.dto.UserThemeResponse;
 import com.prosoteam.proso.domain.user.service.UserService;
 import com.prosoteam.proso.global.common.CommonResponse;
-import com.prosoteam.proso.global.common.ErrorCode;
-import com.prosoteam.proso.global.common.exception.BaseException;
 import com.prosoteam.proso.global.oauth.service.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -45,5 +43,17 @@ public class UserController {
     public CommonResponse<UserResponse> updateExtraInfo(@RequestHeader("Authorization") String jwtToken,@RequestBody ExtraUserRequest extraUserRequest){
         Long socialId = jwtTokenProvider.getUserSocialId(jwtToken);
         return CommonResponse.success(userService.addExtraUserInfo(socialId,extraUserRequest));
+    }
+
+    @GetMapping("/theme")
+    public CommonResponse<List<UserThemeResponse>> getMyTheme(@RequestHeader("Authorization") String jwtToken){
+        Long socialId = jwtTokenProvider.getUserSocialId(jwtToken);
+        return CommonResponse.success(userService.getMyTheme(socialId));
+    }
+
+    @GetMapping("/bookmark")
+    public CommonResponse<List<UserThemeResponse>> getMyBookmarkTheme(@RequestHeader("Authorization") String jwtToken){
+        Long socialId = jwtTokenProvider.getUserSocialId(jwtToken);
+        return CommonResponse.success(userService.getMyBookmarkTheme(socialId));
     }
 }
