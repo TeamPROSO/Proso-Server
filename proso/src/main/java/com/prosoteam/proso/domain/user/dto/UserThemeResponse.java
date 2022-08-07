@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 @Builder
-public class UserWriteThemeResponse {
+public class UserThemeResponse {
     private final Long themeId;
     private final String themeTitle;
     private final String themeIntroduce;
