@@ -30,8 +30,8 @@ public class AmazonS3Controller {
      * @return 성공 시 200 Success
      */
     @DeleteMapping("/file")
-    public CommonResponse<Void> deleteFile(@RequestParam String fileName) {
+    public CommonResponse<String> deleteFile(@RequestParam String fileName) {
         awsS3Service.deleteFile(fileName);
-        return CommonResponse.success(null);
+        return CommonResponse.success(fileName);
     }
 }
