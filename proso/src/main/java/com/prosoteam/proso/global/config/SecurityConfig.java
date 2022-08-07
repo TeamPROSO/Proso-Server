@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // WebSecurity에 필터를 거는 게 훨씬 빠름. HttpSecrity에 필터를 걸면, 이미 스프링 시큐리티 내부에 들어온 상태기 때문에..
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().mvcMatchers( "/image/**","/auth/**");    // /image/** 있는 모든 파일들은 시큐리티 적용을 무시한다.
+        web.ignoring().mvcMatchers( "/image/**","/auth/**","/s3/**");    // /image/** 있는 모든 파일들은 시큐리티 적용을 무시한다.
         web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());    // 정적인 리소스들에 대해서 시큐리티 적용 무시.
     }
     @Override
