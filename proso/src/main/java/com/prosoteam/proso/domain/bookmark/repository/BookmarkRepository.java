@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
@@ -18,5 +19,5 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
      * 나중에 마이페이지에서 북마크한 테마 조회할 때 사용
      */
     @Query("select b from Bookmark b where b.user.socialId= :userId and b.status= :status")
-    Optional<Theme> getThemeList(@Param("userId") Long userId, @Param("status") BookmarkStatus status);
+    List<Theme> getThemeList(@Param("userId") Long userId, @Param("status") BookmarkStatus status);
 }
