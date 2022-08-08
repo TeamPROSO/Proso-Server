@@ -8,4 +8,7 @@ public class ThemeCreationRequest {
     private String themeIntroduce;
     private String themeImgUrl;
     private Long userId;
+
+
+
 }
