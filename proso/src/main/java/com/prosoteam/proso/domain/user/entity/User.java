@@ -1,6 +1,7 @@
 package com.prosoteam.proso.domain.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.prosoteam.proso.domain.theme.model.Theme;
 import com.prosoteam.proso.global.entity.BaseTimeEntity;
 import lombok.*;
@@ -69,7 +70,6 @@ public class User extends BaseTimeEntity {
         this.profileImgUrl=profileImgUrl;
     }
 
-
     public User updateRefreshToken(String refreshToken){
         this.refreshToken=refreshToken;
         return this;
@@ -80,18 +80,9 @@ public class User extends BaseTimeEntity {
     }
     // .. getter, setter 생략
 
-
     @JsonBackReference
     @OneToMany(mappedBy = "user",
             fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Theme> themes;
 
-
-
-    /*
-    @JsonBackReference
-    @OneToMany(mappedBy = "user",
-            fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Content> contents;
-    */
 }

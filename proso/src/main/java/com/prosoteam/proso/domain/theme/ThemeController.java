@@ -1,5 +1,6 @@
 package com.prosoteam.proso.domain.theme;
 
+import com.prosoteam.proso.domain.content.ContentService;
 import com.prosoteam.proso.domain.theme.model.Theme;
 import com.prosoteam.proso.domain.theme.model.ThemeCreationRequest;
 import com.prosoteam.proso.global.common.exception.BaseException;
@@ -13,6 +14,7 @@ import com.prosoteam.proso.global.common.ErrorCode;
 @RequiredArgsConstructor
 public class ThemeController {
     private final ThemeService themeService;
+    private final ContentService contentService;
 
     //테마 생성
     @PostMapping("")
@@ -22,6 +24,7 @@ public class ThemeController {
            //에러발생
            return CommonResponse.error(ErrorCode.POST_POSTS_INVALID_CONTENTS);
         }
+
         return CommonResponse.success(theme);
     }
 
