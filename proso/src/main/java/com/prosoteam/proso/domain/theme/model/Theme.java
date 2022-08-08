@@ -7,17 +7,21 @@ import com.prosoteam.proso.domain.user.entity.User;
 
 import javax.persistence.*;
 
-import javax.persistence.*;
-
 import com.prosoteam.proso.global.entity.BaseTimeEntity;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Formula;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
+@DynamicUpdate
+@DynamicInsert
 @Table(name = "THEME_TB")
 
 public class Theme extends BaseTimeEntity {
@@ -35,6 +39,10 @@ public class Theme extends BaseTimeEntity {
     @Column(length = 5000)
     private String themeImgUrl;
 
+    @Column(columnDefinition = "varchar (25) default 'INACTIVE'")
+    private String status;
+
+
     @ManyToOne
     @JoinColumn(name = "userIdx_FK")
     @JsonManagedReference
@@ -42,8 +50,23 @@ public class Theme extends BaseTimeEntity {
 
     @JsonBackReference
     @OneToMany(mappedBy = "theme",
-            fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Content> contents;
+            fetch = FetchType.LAZY, cascade = CascadeType.ALL,
+    orphanRemoval = true)
+    private List<Content> contents = new ArrayList<>();
+
+
+    public int getCountOfContents(){
+        return this.contents.size();
+    }
+
+    public String changeStatus(){
+        return this.status = "ACTIVE";
+    }
+
+    public String reChangeStatus(){
+        return this.status = "INACTIVE";
+    }
+
 
 }
 

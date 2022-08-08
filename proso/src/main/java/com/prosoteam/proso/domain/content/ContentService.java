@@ -9,6 +9,7 @@ import com.prosoteam.proso.domain.theme.model.Theme;
 import com.prosoteam.proso.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -19,19 +20,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ContentService {
 
-    private final UserRepository userRepository;
     private final ThemeRepository themeRepository;
     private final ContentRepository contentRepository;
 
     //콘텐츠 생성
     public Content createContent(ContentCreationRequest content) {
-       /*
-        Optional<User> user = userRepository.findById(content.getUserId());
-        if (!user.isPresent()) {
-            throw new EntityNotFoundException(
-                    "User Not Found");
-        }
-        */
         Optional<Theme> theme = themeRepository.findById(content.getThemeId());
         if (!theme.isPresent()) {
             throw new EntityNotFoundException(
@@ -40,11 +33,15 @@ public class ContentService {
 
         Content contentToCreate = new Content();
         BeanUtils.copyProperties(content, contentToCreate);
-        //contentToCreate.setUser(user.get());
         contentToCreate.setTheme(theme.get());
+
+        //content 3개 이상 올려야 theme 'INACTIVE' -> 'ACTIVE'
+        if(contentToCreate.getTheme().getCountOfContents()>=2){
+            contentToCreate.getTheme().changeStatus();
+        }
+
         return contentRepository.save(contentToCreate);
     }
-
 
     //콘텐츠 조회
     public Content readContent(Long id){
@@ -80,8 +77,18 @@ public class ContentService {
     }
 
     //콘텐츠 삭제
-    public void deleteContent(Long id) {
+    public void deleteContent(Long id,ContentCreationRequest request) {
+        Optional<Theme> theme = themeRepository.findById(request.getThemeId());
+        Optional<Content> optionalContent = contentRepository.findById(id);
+
+        Content con = optionalContent.get();
         contentRepository.deleteById(id);
+
+        //컨텐츠 삭제할 때 3개미만 되면 테마 INACTIVE 처리
+        if(con.getTheme().getCountOfContents()<3){
+            con.getTheme().reChangeStatus();
+            themeRepository.save(theme.get());
+        }
     }
 
 }

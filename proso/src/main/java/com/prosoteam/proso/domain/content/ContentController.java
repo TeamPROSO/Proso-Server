@@ -3,6 +3,7 @@ package com.prosoteam.proso.domain.content;
 
 import com.prosoteam.proso.domain.content.model.Content;
 import com.prosoteam.proso.domain.content.model.ContentCreationRequest;
+import com.prosoteam.proso.domain.theme.ThemeService;
 import com.prosoteam.proso.global.common.exception.BaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +20,14 @@ public class ContentController {
     //콘텐츠 생성
     @PostMapping("")
     public CommonResponse<Content> createContent (@RequestBody ContentCreationRequest request) {
+
         Content content = contentService.createContent(request);
         if(content == null){
             //에러발생
             return CommonResponse.error(ErrorCode.POST_POSTS_INVALID_CONTENTS);
         }
         return CommonResponse.success(content);
+
     }
 
 
@@ -50,9 +53,10 @@ public class ContentController {
 
     //콘텐츠 삭제
     @DeleteMapping("/{contentId}")
-    public CommonResponse<String> deleteContent(@PathVariable Long contentId){
+    public CommonResponse<String> deleteContent(@PathVariable Long contentId,@RequestBody(required = false)
+            ContentCreationRequest request){
         try{
-            contentService.deleteContent(contentId);
+            contentService.deleteContent(contentId,request);
             String result = "콘텐츠가 성공적으로 삭제되었습니다.";
             return CommonResponse.success(result);
 

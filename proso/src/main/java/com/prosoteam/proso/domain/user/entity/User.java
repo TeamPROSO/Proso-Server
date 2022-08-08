@@ -70,7 +70,6 @@ public class User extends BaseTimeEntity {
         this.profileImgUrl=profileImgUrl;
     }
 
-
     public User updateRefreshToken(String refreshToken){
         this.refreshToken=refreshToken;
         return this;
