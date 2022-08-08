@@ -80,9 +80,6 @@ public class User extends BaseTimeEntity {
     }
     // .. getter, setter 생략
 
-    @JsonBackReference
-    @OneToMany(mappedBy = "user",
-            fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Theme> themes;
+
 
 }

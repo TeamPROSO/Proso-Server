@@ -36,6 +36,12 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
 	implementation 'javax.xml.bind:jaxb-api' //JWT
 
+	//aws S3 사용
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws-messaging'
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws-parameter-store-config'
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2',
 			'io.jsonwebtoken:jjwt-jackson:0.11.2'
 }
