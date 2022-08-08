@@ -26,11 +26,11 @@ public class Bookmark extends BaseTimeEntity {
     @Column(nullable = false)
     private BookmarkStatus status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="userId")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "themeId")
     @JsonManagedReference
     private Theme theme;
