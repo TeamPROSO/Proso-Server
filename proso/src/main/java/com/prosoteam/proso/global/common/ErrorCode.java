@@ -34,7 +34,7 @@ public enum ErrorCode {
 
     THEME_USERS_EMPTY(false,"2015","작성한 테마가 없습니다."),
     BOOKMARK_USERS_EMPTY(false, "2016", "북마크한 테마가 없습니다."),
-    POST_USERS_EXISTS_EMAIL(false,"2017","중복된 이메일입니다."),
+    THEME_SEARCH_RESULT_EMPTY(false,"2017","검색된 테마가 없습니다."),
 
     POST_POSTS_INVALID_CONTENTS(false,"2018","내용의 글자수를 확인해주세요."),
     POST_POSTS_EMPTY_IMGURL(false,"2019","게시물의 이미지를 입력해주세요."),
