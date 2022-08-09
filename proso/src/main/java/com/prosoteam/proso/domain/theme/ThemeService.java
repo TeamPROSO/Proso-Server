@@ -5,13 +5,17 @@ import com.prosoteam.proso.domain.theme.model.Theme;
 import com.prosoteam.proso.domain.theme.model.ThemeCreationRequest;
 import com.prosoteam.proso.domain.user.entity.User;
 import com.prosoteam.proso.domain.user.repository.UserRepository;
+import com.prosoteam.proso.global.common.ErrorCode;
+import com.prosoteam.proso.global.common.exception.BaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -71,6 +75,20 @@ public class ThemeService {
     public void deleteTheme(Long id) {
         themeRepository.deleteById(id);
 
+    }
+
+    /**
+     * 테마 검색
+     */
+    @Transactional
+    public List<Theme> searchTheme(String keyword){
+        List<Theme> themes = themeRepository.findByThemeTitleContaining(keyword);
+        themes.addAll(themeRepository.findByThemeIntroduceContaining(keyword));
+        if (themes.isEmpty()){
+            throw new BaseException(ErrorCode.THEME_SEARCH_RESULT_EMPTY);
+        }
+        themes=themes.stream().distinct().collect(Collectors.toList());
+        return themes;
     }
 
 }
