@@ -5,9 +5,12 @@ import com.prosoteam.proso.domain.theme.model.Theme;
 import com.prosoteam.proso.domain.theme.model.ThemeCreationRequest;
 import com.prosoteam.proso.global.common.exception.BaseException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 import com.prosoteam.proso.global.common.CommonResponse;
 import com.prosoteam.proso.global.common.ErrorCode;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/theme")
@@ -61,5 +64,13 @@ public class ThemeController {
     }
 
 
-
+    /**
+     * 테마 검색 기능
+     * 키워드를 받음 -> 제목이나 introduce에 단어가 있는 경우의 테마들을 리스트 형태로 보내줌
+     *             -> 없는 경우 예외처리를 해줌 .
+     */
+    @GetMapping("/keyword")
+    public CommonResponse<List<Theme>> searchTheme(@Param("keyword") String keyword){
+        return CommonResponse.success(themeService.searchTheme(keyword));
+    }
 }
