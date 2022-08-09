@@ -1,8 +1,9 @@
 package com.prosoteam.proso.domain.theme;
 
 import com.prosoteam.proso.domain.content.ContentService;
+import com.prosoteam.proso.domain.theme.dto.ThemeSearchResponse;
 import com.prosoteam.proso.domain.theme.model.Theme;
-import com.prosoteam.proso.domain.theme.model.ThemeCreationRequest;
+import com.prosoteam.proso.domain.theme.dto.ThemeCreationRequest;
 import com.prosoteam.proso.global.common.exception.BaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
@@ -70,7 +71,7 @@ public class ThemeController {
      *             -> 없는 경우 예외처리를 해줌 .
      */
     @GetMapping("/keyword")
-    public CommonResponse<List<Theme>> searchTheme(@Param("keyword") String keyword){
+    public CommonResponse<List<ThemeSearchResponse>> searchTheme(@Param("keyword") String keyword){
         return CommonResponse.success(themeService.searchTheme(keyword));
     }
 }

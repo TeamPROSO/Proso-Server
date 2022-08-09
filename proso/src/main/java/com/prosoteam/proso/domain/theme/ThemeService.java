@@ -1,8 +1,9 @@
 package com.prosoteam.proso.domain.theme;
 
 import com.prosoteam.proso.domain.theme.ThemeRepository.ThemeRepository;
+import com.prosoteam.proso.domain.theme.dto.ThemeSearchResponse;
 import com.prosoteam.proso.domain.theme.model.Theme;
-import com.prosoteam.proso.domain.theme.model.ThemeCreationRequest;
+import com.prosoteam.proso.domain.theme.dto.ThemeCreationRequest;
 import com.prosoteam.proso.domain.user.entity.User;
 import com.prosoteam.proso.domain.user.repository.UserRepository;
 import com.prosoteam.proso.global.common.ErrorCode;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -81,15 +83,28 @@ public class ThemeService {
      * 테마 검색
      */
     @Transactional
-    public List<Theme> searchTheme(String keyword){
+    public List<ThemeSearchResponse> searchTheme(String keyword) {
         List<Theme> themes = themeRepository.findByThemeTitleContaining(keyword);
         themes.addAll(themeRepository.findByThemeIntroduceContaining(keyword));
-        if (themes.isEmpty()){
+        if (themes.isEmpty()) {
             throw new BaseException(ErrorCode.THEME_SEARCH_RESULT_EMPTY);
         }
-        themes=themes.stream().distinct().collect(Collectors.toList());
-        return themes;
+        themes = themes.stream().distinct().collect(Collectors.toList());
+        List<ThemeSearchResponse> newList = new ArrayList<>();
+        themes.forEach(theme -> {
+                    newList.add(
+                            ThemeSearchResponse.builder()
+                                    .themeId(theme.getId())
+                                    .themeTitle(theme.getThemeTitle())
+                                    .themeIntroduce(theme.getThemeIntroduce())
+                                    .themeImgUrl(theme.getThemeImgUrl())
+                                    .userId(theme.getUser().getSocialId())
+                                    .userName(theme.getUser().getUserName())
+                                    .build()
+                    );
+                }
+        );
+        return newList;
     }
 
 }
-
