@@ -6,13 +6,14 @@ import com.prosoteam.proso.domain.content.model.Content;
 import com.prosoteam.proso.domain.content.model.ContentCreationRequest;
 import com.prosoteam.proso.domain.theme.ThemeRepository.ThemeRepository;
 import com.prosoteam.proso.domain.theme.model.Theme;
-import com.prosoteam.proso.domain.user.repository.UserRepository;
+import com.prosoteam.proso.global.common.ErrorCode;
+import com.prosoteam.proso.global.common.exception.BaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,20 +44,26 @@ public class ContentService {
         return contentRepository.save(contentToCreate);
     }
 
-    //콘텐츠 조회
-    public Content readContent(Long id){
-        Optional<Content> content = contentRepository.findById(id);
-        if(content.isPresent()){
-            return content.get();
+
+    //테마 아이디를 통한 콘텐츠 랜덤조회
+    public Object readContent(Long themeId){
+        Optional<Theme> theme = themeRepository.findById(themeId);
+        if(theme.isPresent()){
+          List lists =  theme.get().getContentsList(themeId);
+          Collections.shuffle(lists);
+
+          //콘텐츠 개수 3개 미만일 때 == 테마 INACTIVE일 때
+          if(theme.get().getCountOfContents()<3) {
+              throw new BaseException(ErrorCode.THEME_USERS_EMPTY);
+          }
+
+          else{
+              return lists.get(1);
+          }
         }
         throw new EntityNotFoundException(
                 "Can not find any content under given ID!!"
         );
-    }
-
-    //콘텐츠 조회
-    public List<Content> readContents(){
-        return contentRepository.findAll();
     }
 
 
