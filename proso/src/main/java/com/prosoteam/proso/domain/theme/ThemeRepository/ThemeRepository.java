@@ -17,6 +17,13 @@ public interface ThemeRepository extends JpaRepository<Theme, Long> {
      */
     @Query("select b from Theme b where b.user.socialId= :userId")
     List<Theme> getThemeList(@Param("userId") Long userId);
+
+    /**
+     * 테마 검색 기능
+     */
+    List<Theme> findByThemeTitleContaining(String keyword);
+
+    List<Theme> findByThemeIntroduceContaining(String keyword);
 }
 
 

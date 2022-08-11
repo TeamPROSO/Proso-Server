@@ -4,6 +4,7 @@ import com.prosoteam.proso.global.common.CommonResponse;
 import com.prosoteam.proso.global.oauth.dto.AuthRequest;
 import com.prosoteam.proso.global.oauth.dto.AuthResponse;
 import com.prosoteam.proso.global.oauth.service.AuthService;
+import com.prosoteam.proso.global.oauth.service.KakaoClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 public class AuthController {
 
     private final AuthService authService;
+    private final KakaoClient kakaoClient;
 
     /**
      * KAKAO 소셜 로그인
@@ -26,10 +28,20 @@ public class AuthController {
     public CommonResponse<AuthResponse> kakaoAuthRequest(@RequestBody AuthRequest authRequest){
         return CommonResponse.success(authService.login(authRequest));
     }
+
+    /**
+     * KAKAO 소셜 로그아웃
+     */
+    @PostMapping("/klogout")
+    public CommonResponse<String> kakaoLogout(@RequestBody AuthRequest authRequest){
+        return CommonResponse.success(kakaoClient.kakaoLogout(authRequest.getAccessToken()));
+    }
+
     /**
      * APPLE 소셜 로그인
      * @return CommonResponse<AuthResponse>
      */
+
 
     /**
      * 앱 토큰 갱신

@@ -1,4 +1,4 @@
-package com.prosoteam.proso.domain.theme.model;
+package com.prosoteam.proso.domain.theme.dto;
 
 import lombok.Data;
 
