@@ -37,8 +37,6 @@ dependencies {
 	implementation 'javax.xml.bind:jaxb-api' //JWT
 
 	//aws S3 사용
-	implementation 'org.springframework.cloud:spring-cloud-starter-aws-messaging'
-	implementation 'org.springframework.cloud:spring-cloud-starter-aws-parameter-store-config'
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
 
