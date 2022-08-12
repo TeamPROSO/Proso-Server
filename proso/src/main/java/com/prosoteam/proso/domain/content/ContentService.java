@@ -54,15 +54,12 @@ public class ContentService {
 
           //콘텐츠 개수 3개 미만일 때 == 테마 INACTIVE일 때
           if(theme.get().getCountOfContents()<3) {
-              throw new BaseException(ErrorCode.THEME_USERS_EMPTY);
-          }
-
+              throw new BaseException(ErrorCode.THEME_USERS_EMPTY);}
           else{
-              return lists.get(1);
-          }
+              return lists.get(1);}
         }
-        throw new EntityNotFoundException(
-                "Can not find any content under given ID!!"
+        throw new BaseException(
+                ErrorCode.THEME_USERS_EMPTY
         );
     }
 
