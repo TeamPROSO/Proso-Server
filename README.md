@@ -27,7 +27,7 @@
 <br>
 **Database** `MySQL 8.0.28`  
 <br>
-**Server**  `AWS` `EC2`  
+**Server**  `AWS` `EC2` 'S3'
 <br>
 **Repository**   `Github`  
 
