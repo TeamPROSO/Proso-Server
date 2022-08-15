@@ -2,21 +2,18 @@ package com.prosoteam.proso.domain.content;
 
 
 import com.prosoteam.proso.domain.content.ContentRepository.ContentRepository;
+import com.prosoteam.proso.domain.content.dto.RandomContentResponse;
 import com.prosoteam.proso.domain.content.model.Content;
-import com.prosoteam.proso.domain.content.model.ContentCreationRequest;
+import com.prosoteam.proso.domain.content.dto.ContentCreationRequest;
 import com.prosoteam.proso.domain.theme.ThemeRepository.ThemeRepository;
 import com.prosoteam.proso.domain.theme.model.Theme;
-import com.prosoteam.proso.global.common.ErrorCode;
-import com.prosoteam.proso.global.common.exception.BaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -48,23 +45,38 @@ public class ContentService {
 
 
     //테마 아이디를 통한 콘텐츠 랜덤조회
-    public Object readContent(Long themeId){
+    @Transactional
+    public Object readContent(Long themeId) {
         Optional<Theme> theme = themeRepository.findById(themeId);
-        if(theme.isPresent()){
-          List lists =  theme.get().getContentsList(themeId);
-          Collections.shuffle(lists);
 
-          //콘텐츠 개수 3개 미만일 때 == 테마 INACTIVE일 때
-          if(theme.get().getCountOfContents()<3) {
-              throw new BaseException(ErrorCode.THEME_USERS_EMPTY);}
-          else{
-              return lists.get(1);}
-    
-        }
-        throw new BaseException(
-                ErrorCode.THEME_USERS_EMPTY
+        List<Content> lists = theme.get().getContentsList(themeId);
+        Collections.shuffle(lists);
+
+        List<RandomContentResponse> newList = new ArrayList<>();
+        lists.forEach(content -> {
+                    newList.add(
+                            RandomContentResponse.builder()
+                                    .contentId(content.getId())
+                                    .contentTitle(content.getContentTitle())
+                                    .contentContent(content.getContentContent())
+                                    .themeId(content.getTheme().getThemeId())
+                                    .themeTitle(content.getTheme().getThemeTitle())
+                                    .themeIntroduce(content.getTheme().getThemeIntroduce())
+                                    .themeImgUrl(content.getTheme().getThemeImgUrl())
+                                    .userId(content.getTheme().getUser().getId())
+                                    .userName(content.getTheme().getUser().getUserName())
+                                    .build()
+                    );
+                }
         );
+
+        List<RandomContentResponse> randomResult = newList.subList(0,2);
+        return randomResult.get(1);
+
     }
+
+
+
 
 
 

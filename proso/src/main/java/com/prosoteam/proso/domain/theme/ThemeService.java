@@ -42,20 +42,50 @@ public class ThemeService {
         return themeRepository.save(themeToCreate);
     }
 
-    //테마 조회
-    public Theme readTheme(Long id){
+    //테마아이디로 테마 조회
+    @Transactional
+    public ThemeSearchResponse readTheme(Long id){
         Optional<Theme> theme = themeRepository.findById(id);
-        if(theme.isPresent()){
-            return theme.get();
+        if(theme.isEmpty()){
+            throw new BaseException(ErrorCode.THEME_SEARCH_RESULT_EMPTY);
         }
-        throw new EntityNotFoundException(
-                "Can not find any theme under given ID!!"
-        );
+
+        return ThemeSearchResponse.builder()
+                .themeId(theme.get().getId())
+                .themeTitle(theme.get().getThemeTitle())
+                .themeIntroduce(theme.get().getThemeIntroduce())
+                .themeImgUrl(theme.get().getThemeImgUrl())
+                .userId(theme.get().getUser().getSocialId())
+                .userName(theme.get().getUser().getUserName())
+                .build();
     }
 
-    //테마 조회
-    public List<Theme> readThemes(){
-        return themeRepository.findAll();
+
+    //테마 전체 조회
+    @Transactional
+    public List<ThemeSearchResponse> readThemes(){
+        List<Theme> themes = themeRepository.findAll();
+        if (themes.isEmpty()) {
+            throw new BaseException(ErrorCode.THEME_SEARCH_RESULT_EMPTY);
+        }
+        themes = themes.stream().distinct().collect(Collectors.toList());
+        List<ThemeSearchResponse> newList = new ArrayList<>();
+        themes.forEach(theme -> {
+                    newList.add(
+                            ThemeSearchResponse.builder()
+                                    .themeId(theme.getId())
+                                    .themeTitle(theme.getThemeTitle())
+                                    .themeIntroduce(theme.getThemeIntroduce())
+                                    .themeImgUrl(theme.getThemeImgUrl())
+                                    .userId(theme.getUser().getSocialId())
+                                    .userName(theme.getUser().getUserName())
+                                    .build()
+                    );
+                }
+        );
+        return newList;
+
+
     }
 
 

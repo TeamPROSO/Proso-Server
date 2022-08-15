@@ -2,8 +2,7 @@ package com.prosoteam.proso.domain.content;
 
 
 import com.prosoteam.proso.domain.content.model.Content;
-import com.prosoteam.proso.domain.content.model.ContentCreationRequest;
-import com.prosoteam.proso.domain.theme.ThemeService;
+import com.prosoteam.proso.domain.content.dto.ContentCreationRequest;
 import com.prosoteam.proso.global.common.exception.BaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
