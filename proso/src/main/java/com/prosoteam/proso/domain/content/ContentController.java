@@ -31,14 +31,14 @@ public class ContentController {
     }
 
 
-    //컨텐츠 조회(아이디로 컨텐츠조회 or 컨텐츠 전체 조회 둘 다 가능)
+
+    //컨텐츠 랜덤 조회
     @GetMapping("")
-    public CommonResponse readContents(@RequestParam(required = false) Long contentId) {
-        if (contentId == null) {
-            return CommonResponse.success(contentService.readContents());
-        }
-        return CommonResponse.success(contentService.readContent(contentId));
+    public CommonResponse readContents(@RequestParam(required = true) Long themeId) {
+        return CommonResponse.success(contentService.readContent(themeId));
     }
+
+
 
 
     //콘텐츠 수정

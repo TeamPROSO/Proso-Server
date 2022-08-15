@@ -8,14 +8,17 @@ import com.prosoteam.proso.domain.user.entity.User;
 import javax.persistence.*;
 
 import com.prosoteam.proso.global.entity.BaseTimeEntity;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Formula;
+
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -55,9 +58,20 @@ public class Theme extends BaseTimeEntity {
     private List<Content> contents = new ArrayList<>();
 
 
+
     public int getCountOfContents(){
         return this.contents.size();
     }
+
+
+    public List<Content> getContentsList(Long themeId){
+        return this.contents;
+    }
+
+    public Long getThemeId(){
+        return this.id;
+    }
+
 
     public String changeStatus(){
         return this.status = "ACTIVE";

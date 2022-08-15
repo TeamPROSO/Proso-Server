@@ -10,7 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ThemeRepository extends JpaRepository<Theme, Long> {
-    Optional<Theme> findById(String Id);
+
+    Optional<Theme> findById(Long Id);
+
 
     /**
      * 작성한 테마 조회
