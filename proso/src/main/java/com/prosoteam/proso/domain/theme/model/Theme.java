@@ -15,6 +15,7 @@ import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -62,6 +63,7 @@ public class Theme extends BaseTimeEntity {
         return this.contents.size();
     }
 
+
     public List<Content> getContentsList(Long themeId){
         return this.contents;
     }
@@ -70,6 +72,7 @@ public class Theme extends BaseTimeEntity {
         return this.id;
     }
 
+
     public String changeStatus(){
         return this.status = "ACTIVE";
     }
@@ -77,7 +80,6 @@ public class Theme extends BaseTimeEntity {
     public String reChangeStatus(){
         return this.status = "INACTIVE";
     }
-
 
 
 }

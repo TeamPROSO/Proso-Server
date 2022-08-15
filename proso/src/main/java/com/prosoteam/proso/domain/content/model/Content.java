@@ -44,7 +44,6 @@ public class Content extends BaseTimeEntity {
 
 
 
-
     @JsonBackReference
     @OneToMany(mappedBy = "content",
             fetch = FetchType.LAZY, cascade = CascadeType.ALL)

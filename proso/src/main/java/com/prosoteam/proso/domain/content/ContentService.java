@@ -10,6 +10,7 @@ import com.prosoteam.proso.global.common.ErrorCode;
 import com.prosoteam.proso.global.common.exception.BaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -45,6 +46,7 @@ public class ContentService {
     }
 
 
+
     //테마 아이디를 통한 콘텐츠 랜덤조회
     public Object readContent(Long themeId){
         Optional<Theme> theme = themeRepository.findById(themeId);
@@ -57,6 +59,7 @@ public class ContentService {
               throw new BaseException(ErrorCode.THEME_USERS_EMPTY);}
           else{
               return lists.get(1);}
+    
         }
         throw new BaseException(
                 ErrorCode.THEME_USERS_EMPTY
