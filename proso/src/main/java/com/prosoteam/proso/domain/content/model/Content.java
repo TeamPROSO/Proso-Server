@@ -6,6 +6,7 @@ import com.prosoteam.proso.domain.main.contentImg.model.ContentImg;
 import com.prosoteam.proso.domain.theme.model.Theme;
 import javax.persistence.*;
 
+import com.prosoteam.proso.domain.user.entity.User;
 import com.prosoteam.proso.global.entity.BaseTimeEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,12 +35,24 @@ public class Content extends BaseTimeEntity {
     @JsonManagedReference
     private Theme theme;
 
+    @ManyToOne
+    @JoinColumn(name = "userIdx_FK")
+    @JsonManagedReference
+    private User user;
+
     public Theme getTheme(){
         return theme;
     }
 
+    public User getUser() {return this.user; }
+
     public void setTheme(Theme theme){
         this.theme = theme;
+    }
+
+
+    public void setUser(User user){
+        this.user = user;
     }
 
 

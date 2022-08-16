@@ -74,4 +74,13 @@ public class ThemeController {
     public CommonResponse<List<ThemeSearchResponse>> searchTheme(@Param("keyword") String keyword){
         return CommonResponse.success(themeService.searchTheme(keyword));
     }
+
+
+    //테마 메인 랜덤 추천 조회
+    @GetMapping("/main")
+    public CommonResponse mainThemes(@PathVariable(required = false)String keyword1,@PathVariable(required = false)String keyword2) {
+
+        return CommonResponse.success(themeService.mainThemes(keyword1,keyword2));
+
+    }
 }

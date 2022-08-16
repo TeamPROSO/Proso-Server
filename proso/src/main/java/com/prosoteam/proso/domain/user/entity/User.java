@@ -2,6 +2,7 @@ package com.prosoteam.proso.domain.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.prosoteam.proso.domain.content.model.Content;
 import com.prosoteam.proso.domain.theme.model.Theme;
 import com.prosoteam.proso.global.entity.BaseTimeEntity;
 import lombok.*;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -80,6 +82,10 @@ public class User extends BaseTimeEntity {
     }
     // .. getter, setter 생략
 
-
+    @JsonBackReference
+    @OneToMany(mappedBy = "user",
+            fetch = FetchType.LAZY, cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Content> contents = new ArrayList<>();
 
 }

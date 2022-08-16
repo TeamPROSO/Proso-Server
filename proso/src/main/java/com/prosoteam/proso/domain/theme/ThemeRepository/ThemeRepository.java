@@ -11,7 +11,9 @@ import java.util.Optional;
 
 public interface ThemeRepository extends JpaRepository<Theme, Long> {
 
+
     Optional<Theme> findById(Long Id);
+    List<Theme> findByThemeTitleContainingOrThemeIntroduceContaining(String keyword1,String keyword2);
 
 
     /**

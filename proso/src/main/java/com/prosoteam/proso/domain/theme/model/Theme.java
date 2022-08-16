@@ -81,6 +81,10 @@ public class Theme extends BaseTimeEntity {
         return this.status = "INACTIVE";
     }
 
+    public String getUserName(){
+        return user.getUserName();
+    }
+
 
 }
 
