@@ -1,6 +1,6 @@
-package com.prosoteam.proso.domain.main.contentImg.ContentImgRepository;
+package com.prosoteam.proso.domain.contentImg.ContentImgRepository;
 
-import com.prosoteam.proso.domain.main.contentImg.model.ContentImg;
+import com.prosoteam.proso.domain.contentImg.model.ContentImg;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

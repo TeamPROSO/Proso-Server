@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface ContentRepository extends JpaRepository<Content, Long> {
-    Optional<Content> findById(String Id);
+    Optional<Content> findById(Long Id);
 
 }
 

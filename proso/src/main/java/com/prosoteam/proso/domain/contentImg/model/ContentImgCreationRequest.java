@@ -1,4 +1,4 @@
-package com.prosoteam.proso.domain.main.contentImg.model;
+package com.prosoteam.proso.domain.contentImg.model;
 
 import lombok.Data;
 

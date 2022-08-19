@@ -33,6 +33,7 @@ public enum ErrorCode {
     MAIN_RESPONSE_EMPTY(false, "2014","카카오맵 API에서 응답 받지 못했습니다."),
 
     THEME_USERS_EMPTY(false,"2015","작성한 테마가 없습니다."),
+
     BOOKMARK_USERS_EMPTY(false, "2016", "북마크한 테마가 없습니다."),
     THEME_SEARCH_RESULT_EMPTY(false,"2017","검색된 테마가 없습니다."),
 
@@ -42,6 +43,8 @@ public enum ErrorCode {
     POSTS_EMPTY_POST_ID(false, "2020", "게시물 아이디 값을 확인해주세요."),
 
     POST_USERS_EMPTY_PASSWORD(false, "2030", "비밀번호를 입력해주세요."),
+    CONTENT_USERS_EMPTY(false,"2021","작성한 컨텐츠가 없습니다."),
+    CONTENT_IMG_USERS_EMPTY(false,"2022","작성한 컨텐츠 이미지가 없습니다."),
 
     /**
      * 3000 : Response 오류
