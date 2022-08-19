@@ -41,7 +41,7 @@ public class JwtTokenProvider {
 
 
     public String generateToken(Long socialId){
-        long tokenPeriod = 1000L * 60L * 40L;
+        long tokenPeriod = 1000L * 60L * 40L * 10L;
 
         Claims claims = Jwts.claims().setSubject(String.valueOf(socialId));
 
