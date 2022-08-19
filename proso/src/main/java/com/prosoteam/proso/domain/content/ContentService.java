@@ -7,6 +7,8 @@ import com.prosoteam.proso.domain.content.model.Content;
 import com.prosoteam.proso.domain.content.dto.ContentCreationRequest;
 import com.prosoteam.proso.domain.theme.ThemeRepository.ThemeRepository;
 import com.prosoteam.proso.domain.theme.model.Theme;
+import com.prosoteam.proso.global.common.ErrorCode;
+import com.prosoteam.proso.global.common.exception.BaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -26,8 +28,7 @@ public class ContentService {
     public Content createContent(ContentCreationRequest content) {
         Optional<Theme> theme = themeRepository.findById(content.getThemeId());
         if (!theme.isPresent()) {
-            throw new EntityNotFoundException(
-                    "Theme Not Found");
+            throw new BaseException(ErrorCode.THEME_USERS_EMPTY);
         }
 
         Content contentToCreate = new Content();
@@ -84,9 +85,7 @@ public class ContentService {
     public Content updateContent (Long id, ContentCreationRequest request){
         Optional<Content> optionalContent = contentRepository.findById(id);
         if(!optionalContent.isPresent()){
-            throw new EntityNotFoundException(
-                    "Content is not present in the database!!"
-            );
+            throw new BaseException(ErrorCode.CONTENT_USERS_EMPTY);
         }
 
         Content content = optionalContent.get();

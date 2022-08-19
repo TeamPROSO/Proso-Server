@@ -14,4 +14,5 @@ public class ThemeSearchResponse {
     private final Long themeId;
     private final Long userId;
     private final String userName;
+    private final Integer contentCount;
 }

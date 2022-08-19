@@ -2,7 +2,7 @@ package com.prosoteam.proso.domain.content.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.prosoteam.proso.domain.main.contentImg.model.ContentImg;
+import com.prosoteam.proso.domain.contentImg.model.ContentImg;
 import com.prosoteam.proso.domain.theme.model.Theme;
 import javax.persistence.*;
 

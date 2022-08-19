@@ -1,5 +1,6 @@
 package com.prosoteam.proso.domain.theme;
 
+import com.prosoteam.proso.domain.content.model.Content;
 import com.prosoteam.proso.domain.theme.ThemeRepository.ThemeRepository;
 import com.prosoteam.proso.domain.theme.dto.ThemeMainRecommendResponse;
 import com.prosoteam.proso.domain.theme.dto.ThemeSearchResponse;
@@ -33,8 +34,7 @@ public class ThemeService {
     public Theme createTheme(ThemeCreationRequest theme) {
         Optional<User> user = userRepository.findById(theme.getUserId());
         if (!user.isPresent()) {
-            throw new EntityNotFoundException(
-                    "User Not Found");
+            throw new BaseException(ErrorCode.USERS_EMPTY_USER_ID);
         }
         Theme themeToCreate = new Theme();
         BeanUtils.copyProperties(theme, themeToCreate);
@@ -47,7 +47,7 @@ public class ThemeService {
     public ThemeSearchResponse readTheme(Long id){
         Optional<Theme> theme = themeRepository.findById(id);
         if(theme.isEmpty()){
-            throw new BaseException(ErrorCode.THEME_SEARCH_RESULT_EMPTY);
+            throw new BaseException(ErrorCode.THEME_USERS_EMPTY);
         }
 
         return ThemeSearchResponse.builder()
@@ -57,6 +57,7 @@ public class ThemeService {
                 .themeImgUrl(theme.get().getThemeImgUrl())
                 .userId(theme.get().getUser().getSocialId())
                 .userName(theme.get().getUser().getUserName())
+                .contentCount(theme.get().getCountOfContents())
                 .build();
     }
 
@@ -66,7 +67,7 @@ public class ThemeService {
     public List<ThemeSearchResponse> readThemes(){
         List<Theme> themes = themeRepository.findAll();
         if (themes.isEmpty()) {
-            throw new BaseException(ErrorCode.THEME_SEARCH_RESULT_EMPTY);
+            throw new BaseException(ErrorCode.THEME_USERS_EMPTY);
         }
         themes = themes.stream().distinct().collect(Collectors.toList());
         List<ThemeSearchResponse> newList = new ArrayList<>();
@@ -79,6 +80,7 @@ public class ThemeService {
                                     .themeImgUrl(theme.getThemeImgUrl())
                                     .userId(theme.getUser().getSocialId())
                                     .userName(theme.getUser().getUserName())
+                                    .contentCount(theme.getCountOfContents())
                                     .build()
                     );
                 }
@@ -93,9 +95,7 @@ public class ThemeService {
     public Theme updateTheme (Long id, ThemeCreationRequest request){
         Optional<Theme> optionalTheme = themeRepository.findById(id);
         if(!optionalTheme.isPresent()){
-            throw new EntityNotFoundException(
-                    "Theme is not present in the database!!"
-            );
+            throw new BaseException(ErrorCode.THEME_USERS_EMPTY);
         }
 
         Theme theme = optionalTheme.get();
