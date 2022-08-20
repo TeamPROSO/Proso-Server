@@ -192,7 +192,7 @@ public class ThemeService {
         return newList3;
 
     }
-
+    
     //테마메인 맨위탭 여름!! 추천
     @Transactional
     public Object mainTopThemes(String keyword1){
@@ -201,9 +201,6 @@ public class ThemeService {
 
         List<Theme> themeList = themeRepository.findByThemeTitleContainingOrThemeIntroduceContaining(keyword1,keyword1);
         List<ThemeMainRecommendResponse> newList = new ArrayList<>();
-        Collections.shuffle(themeList);
-
-
 
         themeList.forEach(theme -> {
             newList.add(
@@ -216,7 +213,6 @@ public class ThemeService {
             );
         });
 
-        List<ThemeMainRecommendResponse> randomResult = newList.subList(0,2);
-        return randomResult.get(1);
+        return newList.get(1);
     }
 }
