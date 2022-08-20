@@ -83,4 +83,12 @@ public class ThemeController {
         return CommonResponse.success(themeService.mainThemes(keyword1,keyword2));
 
     }
+
+    //테마 메인 맨 위탭 랜덤 추천 조회
+    @GetMapping("/main/top")
+    public CommonResponse mainTopThemes(@PathVariable(required = false)String keyword1) {
+
+        return CommonResponse.success(themeService.mainTopThemes(keyword1));
+
+    }
 }

@@ -1,5 +1,6 @@
 package com.prosoteam.proso.domain.theme;
 
+import com.prosoteam.proso.domain.content.dto.RandomContentResponse;
 import com.prosoteam.proso.domain.content.model.Content;
 import com.prosoteam.proso.domain.theme.ThemeRepository.ThemeRepository;
 import com.prosoteam.proso.domain.theme.dto.ThemeMainRecommendResponse;
@@ -190,5 +191,32 @@ public class ThemeService {
         newList3.add(newList2);
         return newList3;
 
+    }
+
+    //테마메인 맨위탭 여름!! 추천
+    @Transactional
+    public Object mainTopThemes(String keyword1){
+
+        keyword1="여름";
+
+        List<Theme> themeList = themeRepository.findByThemeTitleContainingOrThemeIntroduceContaining(keyword1,keyword1);
+        List<ThemeMainRecommendResponse> newList = new ArrayList<>();
+        Collections.shuffle(themeList);
+
+
+
+        themeList.forEach(theme -> {
+            newList.add(
+                    ThemeMainRecommendResponse.builder()
+                            .themeTitle(theme.getThemeTitle())
+                            .themeId(theme.getId())
+                            .themeImgUrl(theme.getThemeImgUrl())
+                            .userName(theme.getUser().getUserName())
+                            .build()
+            );
+        });
+
+        List<ThemeMainRecommendResponse> randomResult = newList.subList(0,2);
+        return randomResult.get(1);
     }
 }
