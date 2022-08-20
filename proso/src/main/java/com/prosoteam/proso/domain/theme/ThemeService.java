@@ -213,6 +213,6 @@ public class ThemeService {
             );
         });
 
-        return newList.get(1);
+        return newList.get(0);
     }
 }
