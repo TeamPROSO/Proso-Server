@@ -76,11 +76,19 @@ public class ThemeController {
     }
 
 
-    //테마 메인 랜덤 추천 조회
-    @GetMapping("/main")
-    public CommonResponse mainThemes(@PathVariable(required = false)String keyword1,@PathVariable(required = false)String keyword2) {
+    //테마 메인 랜덤 추천 조회 카페
+    @GetMapping("/main/cafe")
+    public CommonResponse <List> mainThemesCafe(@Param("keyword")String keyword) {
 
-        return CommonResponse.success(themeService.mainThemes(keyword1,keyword2));
+       return CommonResponse.success(themeService.mainThemesCafe(keyword));
+
+    }
+
+    //테마 메인 랜덤 추천 조회 맛집
+    @GetMapping("/main/restaurant")
+    public CommonResponse <List> mainThemesRestaurant(@Param("keyword")String keyword) {
+
+        return CommonResponse.success(themeService.mainThemesRestaurant(keyword));
 
     }
 

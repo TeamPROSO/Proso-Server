@@ -15,7 +15,6 @@ public interface ThemeRepository extends JpaRepository<Theme, Long> {
     Optional<Theme> findById(Long Id);
     List<Theme> findByThemeTitleContainingOrThemeIntroduceContaining(String keyword1,String keyword2);
 
-
     /**
      * 작성한 테마 조회
      */
