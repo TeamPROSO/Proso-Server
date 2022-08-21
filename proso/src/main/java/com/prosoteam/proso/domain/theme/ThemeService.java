@@ -14,10 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -144,10 +141,12 @@ public class ThemeService {
         keyword = "카페";
         List<Theme> themeList = themeRepository.findByThemeTitleContaining(keyword);
         themeList.addAll(themeRepository.findByThemeIntroduceContaining(keyword));
-        Collections.shuffle(themeList);
 
+        Collections.shuffle(themeList);
+        Set<Theme> themeLists = new HashSet<Theme>(themeList);
+        List<Theme> themeList2 = new ArrayList<>(themeLists);
         // 테마 메인 추천탭에서 슬라이드로 카페관련 테마 5개 랜덤 추천
-        List<Theme> lists = themeList.subList(0,5);
+        List<Theme> lists = themeList2.subList(0,5);
         List<ThemeMainRecommendResponse> newList = new ArrayList<>();
 
         lists.forEach(theme -> {
@@ -174,10 +173,12 @@ public class ThemeService {
         keyword = "맛집";
         List<Theme> themeList = themeRepository.findByThemeTitleContaining(keyword);
         themeList.addAll(themeRepository.findByThemeIntroduceContaining(keyword));
-        Collections.shuffle(themeList);
 
-        // 테마 메인 추천탭에서 슬라이드로 카페관련 테마 5개 랜덤 추천
-        List<Theme> lists = themeList.subList(0,5);
+        Collections.shuffle(themeList);
+        Set<Theme> themeLists = new HashSet<Theme>(themeList);
+        List<Theme> themeList2 = new ArrayList<>(themeLists);
+        // 테마 메인 추천탭에서 슬라이드로 맛집관련 테마 5개 랜덤 추천
+        List<Theme> lists = themeList2.subList(0,5);
         List<ThemeMainRecommendResponse> newList = new ArrayList<>();
 
         lists.forEach(theme -> {
