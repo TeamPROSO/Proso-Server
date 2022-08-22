@@ -2,6 +2,7 @@ package com.prosoteam.proso.domain.theme.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.prosoteam.proso.domain.bookmark.model.Bookmark;
 import com.prosoteam.proso.domain.content.model.Content;
 import com.prosoteam.proso.domain.user.entity.User;
 
@@ -57,12 +58,20 @@ public class Theme extends BaseTimeEntity {
     orphanRemoval = true)
     private List<Content> contents = new ArrayList<>();
 
+    @JsonBackReference
+    @OneToMany(mappedBy = "theme",
+            fetch = FetchType.LAZY, cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Bookmark> bookmarks = new ArrayList<>();
 
 
     public int getCountOfContents(){
         return this.contents.size();
     }
 
+    public int getCountOfBookmarks(){
+        return this.bookmarks.size();
+    }
 
     public List<Content> getContentsList(Long themeId){
         return this.contents;
