@@ -19,13 +19,13 @@ public class MainController {
     private final MainService mainService;
 
     @GetMapping("/food")
-    public CommonResponse<MainRandomResponse> GetRandomFood(@RequestBody UserCurrentRequest userCurrentRequest){
-        return CommonResponse.success(mainService.getNearFoodInfo(userCurrentRequest));
+    public CommonResponse<MainRandomResponse> GetRandomFood(@RequestParam String x,@RequestParam String y){
+        return CommonResponse.success(mainService.getNearFoodInfo(x,y));
     }
 
     @GetMapping("/cafe")
-    public CommonResponse<MainRandomResponse> GetRandomCafe(@RequestBody UserCurrentRequest userCurrentRequest){
-        return CommonResponse.success(mainService.getNearCafeInfo(userCurrentRequest));
+    public CommonResponse<MainRandomResponse> GetRandomCafe(@RequestParam String x,@RequestParam String y){
+        return CommonResponse.success(mainService.getNearCafeInfo(x,y));
     }
 
 

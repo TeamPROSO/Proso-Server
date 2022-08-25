@@ -28,14 +28,14 @@ public class MainService {
     /**
      * 현재위치 기반 주변 식당 리스트 저장 함수.
      */
-    public MainRandomResponse getNearFoodInfo(UserCurrentRequest userCurrentRequest) {
+    public MainRandomResponse getNearFoodInfo(String x,String y) {
         ArrayList<MainRandomResponse> list = new ArrayList<>();
         int page = 0;
 
         while (true) {
             page++;
             log.info("페이지" + page);
-            KakaoMapResponse kakaoMapResponse = kakaoMapClient.getNearFoodInfo(userCurrentRequest.getX(), userCurrentRequest.getY(), page);
+            KakaoMapResponse kakaoMapResponse = kakaoMapClient.getNearFoodInfo(x, y, page);
             if (kakaoMapResponse.getDocuments().isEmpty()) {//예외처리->아무것도 안담겨온경우
                 throw new BaseException(ErrorCode.MAIN_RESPONSE_EMPTY);
             }
@@ -51,14 +51,14 @@ public class MainService {
     /**
      * 현재위치 기반 주변 카페 리스트 저장 함수.
      */
-    public MainRandomResponse getNearCafeInfo(UserCurrentRequest userCurrentRequest){
+    public MainRandomResponse getNearCafeInfo(String x,String y){
         ArrayList<MainRandomResponse> list = new ArrayList<>();
         int page = 0;
 
         while (true) {
             page++;
             log.info("페이지" + page);
-            KakaoMapResponse kakaoMapResponse = kakaoMapClient.getNearCafeInfo(userCurrentRequest.getX(), userCurrentRequest.getY(), page);
+            KakaoMapResponse kakaoMapResponse = kakaoMapClient.getNearCafeInfo(x, y, page);
             if (kakaoMapResponse.getDocuments().isEmpty()) {//예외처리->아무것도 안담겨온경우
                 throw new BaseException(ErrorCode.MAIN_RESPONSE_EMPTY);
             }
