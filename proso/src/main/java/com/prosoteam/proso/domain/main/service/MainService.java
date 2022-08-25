@@ -99,22 +99,22 @@ public class MainService {
         }
     }
 
-    public MainRandomResponse getNearInfo(UserCurrentRequest userCurrentRequest) {
+    public MainRandomResponse getNearInfo(String x,String y) {
         ArrayList<MainRandomResponse> list = new ArrayList<>();
 
         for (int i = 0; i < 4; i++) {
             switch (i) {
                 case 0:
-                    list.add(getResultList(userCurrentRequest.getX(), userCurrentRequest.getY(), "FD6"));
+                    list.add(getResultList(x, y, "FD6"));
                     break;
                 case 1:
-                    list.add(getResultList(userCurrentRequest.getX(), userCurrentRequest.getY(), "CE7"));
+                    list.add(getResultList(x ,y, "CE7"));
                     break;
                 case 2:
-                    list.add(getResultList(userCurrentRequest.getX(), userCurrentRequest.getY(), "CT1"));
+                    list.add(getResultList(x,y,"CT1"));
                     break;
                 case 3:
-                    list.add(getResultList(userCurrentRequest.getX(), userCurrentRequest.getY(), "AT4"));
+                    list.add(getResultList(x,y, "AT4"));
                     break;
             }
 

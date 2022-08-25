@@ -28,9 +28,10 @@ public class MainController {
         return CommonResponse.success(mainService.getNearCafeInfo(userCurrentRequest));
     }
 
+
     @GetMapping("/all")
-    public CommonResponse<MainRandomResponse> GetRandomAll(@RequestParam UserCurrentRequest userCurrentRequest){
-        return CommonResponse.success(mainService.getNearInfo(userCurrentRequest));
+    public CommonResponse<MainRandomResponse> GetRandomAll(@RequestParam String x,@RequestParam String y){
+        return CommonResponse.success(mainService.getNearInfo(x,y));
     }
 
 }
