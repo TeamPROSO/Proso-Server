@@ -29,7 +29,7 @@ public class MainController {
     }
 
     @GetMapping("/all")
-    public CommonResponse<MainRandomResponse> GetRandomAll(@RequestBody UserCurrentRequest userCurrentRequest){
+    public CommonResponse<MainRandomResponse> GetRandomAll(@RequestParam UserCurrentRequest userCurrentRequest){
         return CommonResponse.success(mainService.getNearInfo(userCurrentRequest));
     }
 
